@@ -4,3 +4,4 @@ Chrome extension
 
 [WebGL up and running](http://assets.en.oreilly.com/1/event/83/WebGL%20Up%20and%20Running%20Presentation.pdf)
 
+https://github.com/vjt/canvas-speedometer
