@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<link href="css/test.css" rel="stylesheet" />
+	
+	<script src="js/Three.js"></script>
+	
+    <script src="js/jquery.js"></script>
+	
+	<!-- sim traži mousewheel -->
+	<script src="js/jquery.mousewheel.js"></script>
+	
+	<script src="js/Tween.js"></script>
+	<script src="js/sim/sim.js"></script>
+	<script src="js/sim/animation.js"></script>
+    
+	<script src="js/RequestAnimationFrame.js"></script>
+	
+	<script src="glass_select.js"></script>
+
+
+    <script>
+	var renderer = null;
+	var scene = null;
+	var camera = null;
+	var mesh = null;
+	
+	$(document).ready(
+		function() {
+			var container = document.getElementById("container");
+			var app = new SelectGlassApp();
+			app.init({ container: container });
+			app.run();
+		}
+	);
+	</script>
+
+	
+</head>
+
+<body>
+<h1>Select glass</h1>
+
+<div id="container" style="width:95%; height:80%; position:absolute"></div>
+
+</body>
+
+</html>
