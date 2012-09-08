@@ -18,7 +18,7 @@
     
 	<script src="js/RequestAnimationFrame.js"></script>
 	
-	<script src="glass_select.js"></script>
+	<script src="glass.js"></script>
 
 
     <script>
@@ -31,7 +31,7 @@
 	$(document).ready(
 		function() {
 			var container = document.getElementById("container");
-			app = new SelectGlassApp();
+			app = new GlassApp();
 			app.init({ container: container });
 			app.run();
 		}
