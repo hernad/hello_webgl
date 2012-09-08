@@ -26,13 +26,12 @@ GlassApp.prototype.init = function(param)
 	// prvo staklo
 	var glass = new Glass();
 	glass.init(this, {height: 25, width:8, depth: 3}, {x: -20, y: 0, z: 20}, Glass.IDG1);
-	// dodaj u matricu ovo staklo
-	this.glasses.push(glass);
+	
 	
 	// drugo staklo
 	var glass = new Glass();
 	glass.init(this, {height: 12, width: 12, depth: 5}, {x: 0, y: 0, z: 20}, Glass.IDG2);
-	this.glasses.push(glass);
+	
 }
 
 // kada sklonimo misa sa stakla skloni callout
@@ -55,9 +54,9 @@ GlassApp.prototype.handleMouseScroll = function(delta)
 GlassApp.prototype.onGlassOver = function(id)
 {
 	var html = "";
-	var glass = this.glasses[id-1];
+	var glass = this.glasses[id];
 	
-	
+	//debugger;
 	var contentsHtml = "X: " + glass.height + " Y: " + glass.width + " D:" + glass.depth + "<br>"
 	
 	switch(id)
@@ -98,7 +97,7 @@ GlassApp.prototype.onGlassOver = function(id)
 	callout.glassID = this.selectedControl;
 	
 	// Place the callout near the object and show it
-	var screenpos = this.getObjectScreenPosition(this.glasses[id-1]);
+	var screenpos = this.getObjectScreenPosition(this.glasses[id]);
 	
 	// dinamički setujem stil za callout div
 	// non => block
@@ -146,7 +145,7 @@ GlassApp.prototype.getObjectScreenPosition = function(object)
 
 GlassApp.prototype.selectGlass = function(id)
 {
-	var glass = this.glasses[id-1];
+	var glass = this.glasses[id];
 	
 	var edx = parseInt(document.getElementById('edx').value);
 	var edy = parseInt(document.getElementById('edy').value);
@@ -165,7 +164,7 @@ GlassApp.prototype.selectGlass = function(id)
 	
 	
 	// prvo staklo
-	var glass = new Glass();
+	glass = new Glass();
 	glass.init(this, {height: edx, width: edy, depth: edd}, pos, id);
 
 
@@ -196,6 +195,15 @@ Glass.prototype.init = function(app, geom, pos, id)
 	this.update_geometry(this.height, this.width, this.depth);
     
 	this.setPosition(this.pos.x, this.pos.y, this.pos.z);
+	
+	// dodaj u matricu ovo staklo
+	//debugger;
+	if (!(id in app.glasses))
+	     app.glasses[id] = this;
+	else {
+		delete app.glasses[id];
+		app.glasses[id] = this;
+	}
 }
 
 Glass.prototype.update_geometry = function(height, width, depth)
