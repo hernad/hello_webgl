@@ -2,9 +2,7 @@
 
 body {
     
-
-
-	background-color:#222222;
+	background-color:DarkGray;
 }
 
 h1 {
@@ -24,6 +22,10 @@ h1 {
 	background-color:#000000;
 }
 
+#glass_id {
+  display: none;
+} 
+
 .callout {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -31,31 +33,34 @@ h1 {
 	display:none;
 	text-align:center;
 	margin:auto;
-	padding:10px;
-	width:240px;
-	height:160px;
-	background-color:rgba(200, 200, 200, .1);	
+	padding: 5px;
+	width: 200px;
+	height:140px;
+	background-color: rgba(200, 200, 200, 0.3);	
 	z-index:0;
 	position:absolute;
-	border:1px solid  #00ff00;
+	border: 1px solid green;
 	color:#990000;
 }
 
 .callout .contents {
-	font-style:italic;
-	color:#44ddff;
+	font-style:bold;
+	color: black;
 	text-align:left;
 	margin-top:4px;
 	padding:4px;
-	height:110px;
+	/*height:110px;*/
 	postion:absolute;
 }
 
 .callout .header {
 	text-align:center;
-	text-decoration:underline;
+	color: white;
+	/*text-decoration:underline;*/
+	background-color: DarkGreen;
 	top: 4px;
 	postion:absolute;
+	font-family: sans-serif;
     font-weight: bold;
 	font-size: 18px;
 }
@@ -70,4 +75,28 @@ h1 {
 
 .callout #selectButton {
 	align:center;
+}
+
+.ed {
+  /*width: 20%;*/
+  top: 4px;
+  margin: 4px 4px 4px 4px;
+  position: relative;
+  float: left;
+  /*border: 1px solid yellow;*/
+}
+
+.ed label {
+    /*position: relative;*/
+    /*display: block;*/
+    width: 20px;
+	padding-left: 3px;
+	padding-right: 3px;
+    /*float: left;*/
+    text-align: right;
+}
+
+.ed input[type="text"]
+{
+    width:30px;
 }

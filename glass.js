@@ -13,7 +13,7 @@ GlassApp.prototype.init = function(param)
 	var light = new THREE.DirectionalLight( 0xffffff, 1);
 	
 	// sta mu ga je normalize
-	light.position.set(0, 2, 1).normalize();
+	light.position.set(0, 2, 5).normalize();
 	
 	// osvijetli scenu GlassApp-a
 	this.scene.add(light);
@@ -25,15 +25,13 @@ GlassApp.prototype.init = function(param)
 	
 	// prvo staklo
 	var glass = new Glass();
-	glass.init(this, 25, 8, 3, Glass.IDG1);
-	glass.setPosition(-20, 0, 20);
+	glass.init(this, {height: 25, width:8, depth: 3}, {x: -20, y: 0, z: 20}, Glass.IDG1);
 	// dodaj u matricu ovo staklo
 	this.glasses.push(glass);
 	
 	// drugo staklo
 	var glass = new Glass();
-	glass.init(this, 12, 12, 5, Glass.IDG2);
-    glass.setPosition(0, 0, 20);
+	glass.init(this, {height: 12, width: 12, depth: 5}, {x: 0, y: 0, z: 20}, Glass.IDG2);
 	this.glasses.push(glass);
 }
 
@@ -57,20 +55,21 @@ GlassApp.prototype.handleMouseScroll = function(delta)
 GlassApp.prototype.onGlassOver = function(id)
 {
 	var html = "";
+	var glass = this.glasses[id-1];
+	
+	
+	var contentsHtml = "X: " + glass.height + " Y: " + glass.width + " D:" + glass.depth + "<br>"
+	
 	switch(id)
 	{
 		case Glass.IDG1 :
 			headerHtml = "Staklo G1";
-			contentsHtml = 
-				"Sirina: 1 mm<br>Visina: 1 mm<br>" +
-				"Karakteristike: vako nako";
+			contentsHtml += "Karakteristike: vako nako";
 			break;
 			
 		case Glass.IDG2 :
 		    headerHtml = "Staklo G2";
-			contentsHtml = 
-			"Sirina: 2 mm<br>Visina: 2 mm<br>" +
-			"Karakteristike: vako2 nako2";
+			contentsHtml += "Karakteristike: vako2 nako2";
 
 			break;
 			
@@ -108,6 +107,15 @@ GlassApp.prototype.onGlassOver = function(id)
 
 	callout.style.left = (screenpos.x - callout.offsetWidth / 2)+ "px";
 	callout.style.top = (screenpos.y + Glass.CALLOUT_Y_OFFSET) + "px";
+	
+	
+	document.getElementById('edx').value = glass.height.toString();
+	document.getElementById('edy').value = glass.width.toString();
+	document.getElementById('edd').value = glass.depth.toString();
+	
+	//debugger;	
+    document.getElementById("glass_id").value = glass.id.toString();
+	
 }
 
 //
@@ -138,6 +146,30 @@ GlassApp.prototype.getObjectScreenPosition = function(object)
 
 GlassApp.prototype.selectGlass = function(id)
 {
+	var glass = this.glasses[id-1];
+	
+	var edx = parseInt(document.getElementById('edx').value);
+	var edy = parseInt(document.getElementById('edy').value);
+	var edd = parseInt(document.getElementById('edd').value);
+
+
+	// skaliranjem izmedju nove i stare vrijednosti dobijamo 
+	// novu dimenziju stakla
+    //glass.mesh.scale.set(edx/glass.height, edy/glass.width, edd/glass.depth);
+ 
+    //var g_old = glass.mesh.geometry;
+	
+	var pos = glass.pos;
+	
+	this.removeObject(glass);
+	
+	
+	// prvo staklo
+	var glass = new Glass();
+	glass.init(this, {height: edx, width: edy, depth: edd}, pos, id);
+
+
+
 }
 
 
@@ -150,19 +182,33 @@ Glass = function()
 
 Glass.prototype = new Sim.Object();
 
-Glass.prototype.init = function(app, visina, sirina, debljina, id)
+Glass.prototype.init = function(app, geom, pos, id)
 {
-    this.height = visina || 10;
-	this.width = sirina || 10;
-	this.deepth = debljina || 2;
+	
+    this.height = geom.height || 10;
+	this.width = geom.width || 10;
+	this.depth = geom.depth || 2;
+	
+	this.pos = pos;
+	
 	this.id = id;
 	
+	this.update_geometry(this.height, this.width, this.depth);
+    
+	this.setPosition(this.pos.x, this.pos.y, this.pos.z);
+}
+
+Glass.prototype.update_geometry = function(height, width, depth)
+{
 	
-    var geometry = new THREE.CubeGeometry(this.height, this.width, this.deepth);
-	var material = new THREE.MeshPhongMaterial({ color: 0xffffff, ambient: 0xffffff, transparent: true} );		
+	
+    var geometry = new THREE.CubeGeometry(height, width, depth);
+	
+	//debugger;
+	var material = new THREE.MeshPhongMaterial({color: 0xffffff, ambient: 0xffffff, transparent: true, reflectivity: 1, opacity: 0.65} );		
     var mesh = new THREE.Mesh( geometry, material );
 
-    mesh.doubleSided = true;
+    //mesh.doubleSided = true;
 	
     this.setObject3D(mesh);
     this.mesh = mesh;
@@ -175,6 +221,7 @@ Glass.prototype.init = function(app, visina, sirina, debljina, id)
 	//debugger;
 	this.subscribe("over", app, app.onGlassOver);
 	app.addObject(this);
+
 }
 
 Glass.prototype.handleMouseUp = function(x, y, point, normal)
