@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<head>
+
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Blender render</title>
+	
+	
+	<link href="css/blender.css" rel="stylesheet" />
+	<script src="js/jquery.js"></script>
+	
+	
+    <script>
+	
+	$(document).ready(
+		
+		function() 
+		{
+			var ne_ponavljaj = false;
+			
+			console.log('doc ready');
+			$('#slika').mouseover(function() 
+			{
+				if (ne_ponavljaj)
+				    return;
+				
+				// kad jednom pokrenes opciju narednih 12 sec ne okidaj ovaj handler;	
+				ne_ponavljaj = true;
+					
+				var div = $('#callout')[0]; 
+				
+				div.style.display = 'block';
+				console.log('na slici');
+		
+				setTimeout(function(){ div.style.display = 'none'; ne_ponavljaj = false; }, 12000);
+		
+			});
+			
+			   $('button').click(function()
+			    {
+				   document.location.href="glass.html";
+			    });
+			
+			/*
+			$('#slika').mouseout(function() 
+			{
+				$('#callout')[0].style.display = 'none';
+				console.log('otisao sa slike');
+			});
+			*/
+		}
+	);
+	
+	</script>
+	
+</head>
+	
+<html>
+
+<body style="background:rgb(64,59,59);">
+	
+<div id="callout">
+Radna okolina blendera
+</div>
+
+
+<div align="center">
+<img id="slika" src="blender/blender_desktop.png" style="width: 90%;"></img>
+</body>
+</div>
+<br/>
+<button name="dalje" style="height:30px;width:40%;margin-left:30%;margin-right:30%;">Idemo sad na nesto konkretno</button>
+</body>
+
+<br><br>
+<div style="color:white;font-size:small;text-align:center">za dodatne info pređi mišem po slici ...</div>
+
+</html>
