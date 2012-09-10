@@ -3,7 +3,7 @@
 <head>
 
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <title>Blender desktop</title>
+    <title>Web GL book</title>
 	
 	
 	<link href="css/blender.css" rel="stylesheet" />
@@ -19,6 +19,8 @@
 			var ne_ponavljaj = false;
 			
 			console.log('doc ready');
+			
+			/*
 			$('#slika').mouseover(function() 
 			{
 				if (ne_ponavljaj)
@@ -36,9 +38,11 @@
 		
 			});
 			
+			*/
+			
 			   $('button').click(function()
 			    {
-				   document.location.href="webgl_book.html";
+				   document.location.href = "model_viewer.html";
 			    });
 			
 			/*
@@ -57,7 +61,7 @@
 	
 <html>
 
-<body style="background:rgb(64,59,59);">
+<body>
 	
 <div id="callout">
 Radna okolina blendera
@@ -65,13 +69,18 @@ Radna okolina blendera
 
 
 <div align="center">
-<img id="slika" src="blender/blender_desktop.png" style="width: 90%;"></img>
-</body>
+	
+<a href="http://shop.oreilly.com/product/0636920024729.do" target="_blank">	
+<img id="slika" src="WebGLBook/cover.gif"></img>
+</a>
+
 </div>
 <br/>
-<button name="dalje" style="height:30px;width:40%;margin-left:30%;margin-right:30%;">WebGL book</button>
-
+<button name="dalje" style="height:30px;width:40%;margin-left:30%;margin-right:30%;">View blender model in WeGL canvas</button>
 </body>
 
+<br><br>
+
+</body>
 
 </html>

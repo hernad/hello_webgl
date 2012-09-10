@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<link href="css/model.css" rel="stylesheet" />
+	
+	<script src="js/Three.js"></script>
+	
+    <script src="js/jquery.js"></script>
+	
+	<!-- sim traži mousewheel -->
+	<script src="js/jquery.mousewheel.js"></script>
+	
+	<script src="js/Tween.js"></script>
+	<script src="js/sim/sim.js"></script>
+	<script src="js/sim/animation.js"></script>
+    
+	<script src="js/RequestAnimationFrame.js"></script>
+	
+
+    <!-- ucitavanje json modela -->
+	<script src="js/json_model.js"></script>
+
+
+	<script src="js/model_viewer.js"></script>
+	
+
+    <script>
+
+	var app = null;
+	
+	function onModelLoaded(model, info)
+	{
+		var geometry = model.mesh.geometry;
+
+		// Display the bounding box, number of materials and number of faces
+		geometry.computeBoundingBox();
+		var bbox = geometry.boundingBox;
+		var width = bbox.x[1] - bbox.x[0];
+		var height = bbox.y[1] - bbox.y[0];
+		var depth = bbox.z[1] - bbox.z[0];
+
+		var nMaterials = geometry.materials.length;
+		var nFaces = geometry.faces.length;
+		var nPlaces = 3;
+		
+		var statsHTML = "Model Info<br>Dimensions: " + width.toFixed(nPlaces) + " x " +
+			height.toFixed(nPlaces) + " x " + depth.toFixed(nPlaces) + "<br># Materials: " + nMaterials +
+			"<br># Faces: " + nFaces;
+
+		info.model = model;
+		info.stats = statsHTML;
+
+		displayModelStats(statsHTML);
+	}
+
+	function displayModelStats(statsHTML)
+	{
+		var modelStats = document.getElementById("modelStats");
+		modelStats.innerHTML = statsHTML;
+		modelStats.style.display = "block";
+	}
+	
+	
+
+		
+	function loadModel()
+	{
+	    
+		var model;
+	
+		/*
+	    { modelClass : JSONModel, url : "../models/Kuca/kuca.js", scale:0.5, position:{x:0, y:0}, 
+	      	rotation:{ x: 0, z: 0   }, model:null},
+		*/
+			
+		//var info = modelInfo[index];
+		model = new JSONModel;			
+		model.init(
+		{ 
+				url : "blender/kuca.js", 
+				scale: 0.5,
+				position: {x:0, y:0},
+				callback: function(model) {
+					onModelLoaded(model, info);
+				}
+		});
+
+        //model.object3d.position.set(0, 0, 0);
+		model.object3D.rotation.set( Math.PI/9, -Math.PI/9, 0);
+
+			
+								
+	    /*
+			
+		if (info.position)
+		{
+				model.object3D.position.set(info.position.x ? info.position.x : 0,
+						info.position.y ? info.position.y : 0,
+						info.position.z ? info.position.z : 0);
+								
+		}
+
+		if (info.rotation)
+		{
+				model.object3D.rotation.set(info.rotation.x ? info.rotation.x : 0,
+						info.rotation.y ? info.rotation.y : 0,
+						info.rotation.z ? info.rotation.z : 0);
+								
+		}
+		
+		*/	
+		
+		app.addModel(model);
+
+	}
+		
+
+	$(document).ready(
+		function() {
+			
+			console.log("doc ready");
+			
+			/*
+			var select = document.getElementById("select_1");
+			
+			var options = [];
+			options[0]= document.createElement("option");
+			options[0].text="opt1";
+			
+			options[1]= document.createElement("option");
+			options[1].text = "opt2";
+			options[1].selected = "selected";
+		
+			debugger;
+		    for (var i=0; i < options.length; i++) {
+				select.add(options[i]);
+			}
+	
+			*/
+			$('button').click(function(){ document.location.href = "glass.html"});
+			
+			var container = document.getElementById("container");
+			app = new ModelViewer();
+			app.init({ container: container });
+			loadModel();
+			app.run();
+			
+			
+			
+		}
+	);
+
+
+
+	
+	</script>
+
+	
+</head>
+
+<body>
+<h1>Blender JSON model</h1>
+
+<!--
+<select id="select_1">
+</select>
+-->
+	
+<div id="container" style="color:yellow;background-color:silver;width=600px;height:600px">container</div>
+
+<div id="prompt">
+Click the mouse to manipulate the model: Left = rotate, Right = Pan<br></br>
+
+<div id="modelStats">
+Informacije  o modelu: ?
+</div>
+
+<br/><br/>
+
+<button name="dalje" style="height:30px;width:40%;margin-left:30%;margin-right:30%;">Glass Composer</button>
+
+</body>
+
+</html>
