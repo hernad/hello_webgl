@@ -1,4 +1,13 @@
-Chrome extension
+hosting on openshift
+=====================
+
+http://hellowebgl-knowhow.rhcloud.com/hello_webgl/glass.html
+
+
+Chrome extensions 
+===================
+
+REJECTED - na kraju obicna web aplikacija
 
 [developing and debugging youtube](http://www.youtube.com/watch?v=IP0nMv_NI1s)
 
@@ -11,7 +20,7 @@ https://github.com/jeromeetienne/threejsboilerplate
 https://github.com/jeromeetienne/threex
 
 blender export
----------------
+================
  
 1)
 
