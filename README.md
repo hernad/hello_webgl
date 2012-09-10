@@ -1,7 +1,7 @@
 hosting on openshift
 =====================
 
-http://hellowebgl-knowhow.rhcloud.com/hello_webgl/glass.html
+http://hellowebgl-knowhow.rhcloud.com/hello_webgl/index.html
 
 
 Chrome extensions 
