@@ -1,7 +1,7 @@
 GlassApp = function() 
 {
 	Sim.App.call(this);
-}
+};
 
 GlassApp.prototype = new Sim.App();
 
@@ -26,13 +26,16 @@ GlassApp.prototype.init = function(param)
 	// prvo staklo
 	var glass = new Glass();
 	glass.init(this, {height: 25, width:8, depth: 3}, {x: -20, y: 0, z: 20}, Glass.IDG1);
-	
+		
 	
 	// drugo staklo
 	var glass = new Glass();
 	glass.init(this, {height: 12, width: 12, depth: 5}, {x: 0, y: 0, z: 20}, Glass.IDG2);
+
+    
 	
-}
+	this.setFloor();
+};
 
 // kada sklonimo misa sa stakla skloni callout
 GlassApp.prototype.handleMouseUp = function(x,y)
@@ -40,7 +43,7 @@ GlassApp.prototype.handleMouseUp = function(x,y)
 	var callout = document.getElementById("callout");
 	callout.style.display = "none";
 
-}
+};
 
 // pomjeramo kameru scene sa mouse scroll-om
 GlassApp.prototype.handleMouseScroll = function(delta)
@@ -48,16 +51,16 @@ GlassApp.prototype.handleMouseScroll = function(delta)
 	var dx = delta;
  
 	this.camera.position.z -= dx;
-}
+};
 
 
 GlassApp.prototype.onGlassOver = function(id)
 {
-	var html = "";
+
 	var glass = this.glasses[id];
 	
 	//debugger;
-	var contentsHtml = "X: " + glass.height + " Y: " + glass.width + " D:" + glass.depth + "<br>"
+	var contentsHtml = "X: " + glass.height + " Y: " + glass.width + " D:" + glass.depth + "<br>";
 	
 	switch(id)
 	{
@@ -112,10 +115,9 @@ GlassApp.prototype.onGlassOver = function(id)
 	document.getElementById('edy').value = glass.width.toString();
 	document.getElementById('edd').value = glass.depth.toString();
 	
-	//debugger;	
     document.getElementById("glass_id").value = glass.id.toString();
 	
-}
+};
 
 //
 // x, y koordinate na 2D canvasu
@@ -141,7 +143,7 @@ GlassApp.prototype.getObjectScreenPosition = function(object)
 	elty += offset.top;
 	
 	return { x: eltx, y: elty };
-}
+};
 
 GlassApp.prototype.selectGlass = function(id)
 {
@@ -169,7 +171,37 @@ GlassApp.prototype.selectGlass = function(id)
 
 
 
-}
+};
+
+
+GlassApp.prototype.setFloor = function ()
+{
+	
+    var geometry = new THREE.CubeGeometry(200, 0.1, 120, 15, 1, 15);
+	
+	var material = new THREE.MeshPhongMaterial({color: 0x000077, wireframe: 1, transparent: false, opacity: 0.07} );	
+
+    var mesh = new THREE.Mesh( geometry, material );
+
+    var obj3 = new Sim.Object(); 
+    obj3.setObject3D(mesh);
+    obj3.mesh = mesh;
+	
+
+	// zakreni ga
+    // Turn the canvas a bit so that we can see the 3D-ness
+    obj3.mesh.rotation.x = GlassApp.X_ROTATION;
+	obj3.mesh.rotation.y = GlassApp.Y_ROTATION; // + Math.PI/3;
+	
+    //obj3.mesh.rotation.z = Math.PI / 2;
+	obj3.setPosition(0, 0, -1);
+
+    
+    //obj3.object3D.rotation.set( -Math.PI/4, -Math.PI/9, 0);
+    
+	this.addObject(obj3);
+
+};
 
 
 // ------------------------------------
@@ -177,7 +209,7 @@ GlassApp.prototype.selectGlass = function(id)
 Glass = function()
 {
 	Sim.Object.call(this);
-}
+};
 
 Glass.prototype = new Sim.Object();
 
@@ -204,7 +236,8 @@ Glass.prototype.init = function(app, geom, pos, id)
 		delete app.glasses[id];
 		app.glasses[id] = this;
 	}
-}
+	
+};
 
 Glass.prototype.update_geometry = function(height, width, depth)
 {
@@ -230,13 +263,13 @@ Glass.prototype.update_geometry = function(height, width, depth)
 	this.subscribe("over", app, app.onGlassOver);
 	app.addObject(this);
 
-}
+};
 
 Glass.prototype.handleMouseUp = function(x, y, point, normal)
 {
 
 	this.publish("selected", this.id);
-}
+};
 
 Glass.prototype.handleMouseOver = function()
 {
@@ -244,8 +277,11 @@ Glass.prototype.handleMouseOver = function()
 	// on se pretplatio na "over" dogadjaj
 	this.publish("over", this.id);
 	
-}
+};
 
+GlassApp.X_ROTATION = Math.PI / 12;
+GlassApp.Y_ROTATION = Math.PI / 6;
+	
 Glass.IDG1 = 1;
 Glass.IDG2 = 2;
 Glass.CALLOUT_Y_OFFSET = 50;
