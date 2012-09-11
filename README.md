@@ -48,3 +48,11 @@ Chapter 8/game view modeler, dodao load ovog modela sa parametrima:
 nakon toga se ucita model ok, ali su materijali poremeceni (boje)
 
 
+third_party
+============
+
+https://github.com/mrdoob/three.js/
+
+https://github.com/tparisi/Sim.js
+
+mrdoob-three.js-a8853b8$ cp ./utils/exporters/obj/convert_obj_three.py
