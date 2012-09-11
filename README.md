@@ -1,7 +1,7 @@
 hosting on openshift
 =====================
 
-http://hellowebgl-knowhow.rhcloud.com/hello_webgl/index.html
+http://hello-webgl.out.ba/
 
 
 Chrome extensions 
