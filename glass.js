@@ -25,18 +25,19 @@ GlassApp.prototype.init = function(param)
     this.glasses = [];
     this.distanceri = [];
 	
+	// ========= prvo dvoslojno staklo sa distancerom ============
 	// prvo staklo
 	var glass = new Glass();
 	// podigni za dvije visine
 	var g_height = 20; 
 	var g_width = 10;
-	var g_debljina = 8;
+	var g_debljina = 6;
 	glass.init(this, 
 		{width: g_width, height: g_height, depth: g_debljina}, 
 		{x: 0, y: g_height/2, z: 0}, Glass.IDG1);
 
 	var distanc = new Distancer();
-	var d_debljina = 15;
+	var d_debljina = 2;
 	distanc.init(this, 
 	   {width: g_width, height: g_height, depth: d_debljina}, 
 	   {x: 0, y: g_height/2, z: g_debljina/2 + d_debljina/2}, Distancer.IDD1);
@@ -46,7 +47,7 @@ GlassApp.prototype.init = function(param)
 	var glass = new Glass();
 	var g_height = 20; 
 	var g_width = 10;
-	var g_debljina_2 = 15;
+	var g_debljina_2 = 4;
 	
 	// pozicija narednog stakla moramo dodati pola 1/2 debljine predhodnog stakla
 	// + kompletnu debljinu distanceri i 1/2 novog stakla
@@ -54,11 +55,43 @@ GlassApp.prototype.init = function(param)
 		{width: g_width, height: g_height, depth: g_debljina_2}, 
 		{x: 0, y: g_height/2, z: g_debljina/2 + d_debljina + g_debljina_2/2}, Glass.IDG2);
 	
-	/*
-	var glass = new Distancer();
-	glass.init(this, {height: 12, width: 12, depth: 2}, {x: 0, y: 0, z: 20}, Distancer.IDD1);
-	*/	
+	// === END kompozicija stakla 1
 	
+	
+	// ========= drugo dvoslojno staklo sa distancerom ============
+	// prvo staklo
+	var glass = new Glass();
+	// podigni za dvije visine
+	var g_height = 12; 
+	var g_width = 5;
+	var g_debljina = 4;
+	
+	glass.init(this, 
+		{width: g_width, height: g_height, depth: g_debljina}, 
+		{x: 20, y: g_height/2, z: 0}, Glass.IDG3);
+
+	var distanc = new Distancer();
+	var d_debljina = 1;
+	// ovaj mi distancer nije dobro pozicioniran kao prvi ?!
+	// neki je bug po y osi ... rucno cu ga sada nastimati sa delta var
+	var delta = 4;
+	distanc.init(this, 
+	   {width: g_width, height: g_height, depth: d_debljina}, 
+	   {x: 20, y: g_height/2 + 4, z: g_debljina/2 + d_debljina/2}, Distancer.IDD2);
+	
+	
+	// drugo staklo
+	var glass = new Glass();
+	var g_debljina_2 = 2;
+	
+	// pozicija narednog stakla moramo dodati pola 1/2 debljine predhodnog stakla
+	// + kompletnu debljinu distanceri i 1/2 novog stakla
+	glass.init(this, 
+		{width: g_width, height: g_height, depth: g_debljina_2}, 
+		{x: 20, y: g_height/2, z: g_debljina/2 + d_debljina + g_debljina_2/2}, Glass.IDG4);
+	
+	// ----- END kompozicija stakla 1
+		
 	
     
 	this.createCameraControls();
@@ -124,6 +157,16 @@ GlassApp.prototype.onGlassOver = function(id)
 
 			break;
 			
+		case Glass.IDG3 :
+			headerHtml = "Staklo G3";
+			contentsHtml += "Karakteristike: todo-3";
+			break;
+				
+		case Glass.IDG4 :
+			headerHtml = "Staklo G4";
+			contentsHtml += "Karakteristike: todo-4";
+			break;
+				
 		default:
 		    headerHtml = "nista";
 		    contentsHtml = "nista<br>pa nista";
@@ -508,6 +551,8 @@ Distancer.prototype.handleMouseOver = function()
 	
 Glass.IDG1 = 1;
 Glass.IDG2 = 2;
+Glass.IDG3 = 3;
+Glass.IDG4 = 4;
 
 Distancer.IDD1 = 1;
 Distancer.IDD2 = 2;
