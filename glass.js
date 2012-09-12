@@ -31,13 +31,16 @@ GlassApp.prototype.init = function(param)
 	var g_height = 20; 
 	var g_width = 10;
 	var g_debljina = 8;
-	glass.init(this, {width: g_width, height: g_height, depth: g_debljina}, {x: 0, y: g_height/2, z: 0}, Glass.IDG1);
-	// distancer
+	glass.init(this, 
+		{width: g_width, height: g_height, depth: g_debljina}, 
+		{x: 0, y: g_height/2, z: 0}, Glass.IDG1);
+
+	var distanc = new Distancer();
+	var d_debljina = 15;
+	distanc.init(this, 
+	   {width: g_width, height: g_height, depth: d_debljina}, 
+	   {x: 0, y: g_height/2, z: g_debljina/2 + d_debljina/2}, Distancer.IDD1);
 	
-	/*
-	var glass = new Distancer();
-	glass.init(this, {height: 10, width: 8, depth: 2}, {x: -20, y: 0, z: 16}, Distancer.IDD2);
-	*/
 	
 	// drugo staklo
 	var glass = new Glass();
@@ -45,8 +48,11 @@ GlassApp.prototype.init = function(param)
 	var g_width = 10;
 	var g_debljina_2 = 15;
 	
-	// pozicija narednog stakla moramo dodati pola 1/2 debljine predhodnog stakla i 1/2 ovog stakla (1/2 prvog ulazi u z osu)
-	glass.init(this, {width: g_width, height: g_height, depth: g_debljina_2}, {x: 0, y: g_height/2, z: g_debljina/2 + g_debljina_2/2}, Glass.IDG2);
+	// pozicija narednog stakla moramo dodati pola 1/2 debljine predhodnog stakla
+	// + kompletnu debljinu distanceri i 1/2 novog stakla
+	glass.init(this, 
+		{width: g_width, height: g_height, depth: g_debljina_2}, 
+		{x: 0, y: g_height/2, z: g_debljina/2 + d_debljina + g_debljina_2/2}, Glass.IDG2);
 	
 	/*
 	var glass = new Distancer();
@@ -101,18 +107,20 @@ GlassApp.prototype.onGlassOver = function(id)
 
 	var glass = this.glasses[id];
 	
-	var contentsHtml = "X: " + glass.height + " Y: " + glass.width + " D:" + glass.depth + "<br>";
-	
+
+	// W-width, H-height, T-thickness
+	var contentsHtml = "W: " + glass.width + " H: " + glass.height + " T:" + glass.depth + "<br>";
+
 	switch(id)
 	{
 		case Glass.IDG1 :
 			headerHtml = "Staklo G1";
-			contentsHtml += "Karakteristike: vako nako";
+			contentsHtml += "Karakteristike: todo-1";
 			break;
 			
 		case Glass.IDG2 :
 		    headerHtml = "Staklo G2";
-			contentsHtml += "Karakteristike: vako2 nako2";
+			contentsHtml += "Karakteristike: todo-2";
 
 			break;
 			
@@ -169,7 +177,8 @@ GlassApp.prototype.onDistancerOver = function(id)
 	var distancer = this.distanceri[id];
 	
 
-	var contentsHtml = "X: " + distancer.height + " Y: " + distancer.width + " D:" + distancer.depth + "<br>";
+	// W-width, H-height, T-thickness
+	var contentsHtml = "W: " + distancer.width + " H: " + distancer.height + " T:" + distancer.depth + "<br>";
 	
 	switch(id)
 	{
@@ -436,9 +445,9 @@ Distancer.prototype.init = function(app, geom, pos, id)
 	
 	this.id = id;
 	
-	this.update_geometry(this.height / 2, this.width / 2, this.depth / 2);
+	this.update_geometry(this.width/2, this.height / 2, this.depth / 2);
     
-	this.setPosition(this.pos.x -1, this.pos.y - 4, this.pos.z);
+	this.setPosition(this.pos.x, this.pos.y - 10, this.pos.z);
 	
 	
 	// dodaj u matricu ovaj distancer
@@ -452,7 +461,7 @@ Distancer.prototype.init = function(app, geom, pos, id)
 	
 };
 
-Distancer.prototype.update_geometry = function(height, width, depth)
+Distancer.prototype.update_geometry = function(width, height, depth)
 {
 	
 	var model = new JSONModel;			
@@ -471,7 +480,7 @@ Distancer.prototype.update_geometry = function(height, width, depth)
 	// zakreni ga
     // Turn the canvas a bit so that we can see the 3D-ness
     
-    this.mesh.scale.set(height, width, depth * 5);
+    this.mesh.scale.set(width, height, depth * 5);
     
 	this.subscribe("over", app, app.onDistancerOver);
 	

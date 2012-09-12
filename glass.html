@@ -57,9 +57,9 @@
 </head>
 
 <body>
-<h1>Select glass</h1>
+<h1>Glass selector</h1>
 
-<div id="container" style="width:95%; height:80%; position:absolute"></div>
+<div id="container" style="width:100%; height:700px; position:absolute"></div>
 
 <!-- callout objekat prikazuje podatke o staklu -->
 <div id="callout" class="callout">
@@ -71,9 +71,9 @@
        <form name="mjere" action="" method="get">
 		  <div class="ed">
 		  <input id="glass_id" name="glass_id" style="display:none;"/>
-          <label for="X">X:</label><input id="edx" name="edx" type="text" placeholder="0"/>
-          <label for="Y">Y:</label><input id="edy" name="edy" type="text" placeholder="0"/>
-		  <label for="D">D:</label><input id="edd" name="edd" type="text" placeholder="0"/>
+          <label for="H">H:</label><input id="edx" name="edx" type="text" placeholder="0"/>
+          <label for="W">W:</label><input id="edy" name="edy" type="text" placeholder="0"/>
+		  <label for="T">T:</label><input id="edd" name="edd" type="text" placeholder="0"/>
 		  </div>
        </form>
     </div>
@@ -81,7 +81,9 @@
 		   <button onclick="onSelectClicked(this);">Ok</button>
 	 </div>
 </div>
-
+<div id="commands" >
+Commands: MouseOver - edit Glass dimensions; mouse left-click+drag - rotate scene; right-click+drag - pane scene; mouse scrool - zoom; 
+</div>
 </body>
 
 </html>
