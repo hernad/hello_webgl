@@ -4,6 +4,14 @@ hosting on openshift
 http://hello-webgl.out.ba/
 
 
+Prvi rezultati ...
+===================
+
+Proceduralno kreirana dva dvoslojna kompozitna stakla (staklo + distancer + staklo2)
+
+![interakcija sa 3D modelom - odabir stakla i setovanje dimenzija](https://github.com/hernad/hello_webgl/raw/master/images/glass_composition.png
+
+
 Chrome extensions 
 ===================
 
