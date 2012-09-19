@@ -27,7 +27,7 @@ JSONModel.prototype.init = function(param)
 
     // Tell the framework about our object
     this.setObject3D(group);
-}
+};
 
 
 JSONModel.prototype.handleLoaded = function(data)
@@ -54,4 +54,4 @@ JSONModel.prototype.handleLoaded = function(data)
 			this.loadCallback(this);
 		}
 	}
-}
+};
