@@ -339,7 +339,7 @@ GlassApp.prototype.update = function()
 GlassApp.prototype.createMenu = function ()
 {
 	var div_staklo_1 = document.getElementById("d_staklo_1");
-	
+	var app = this;
 	
 	$("#m_btn_1").bind('click',  function() {
 		console.log("opcija 1");
@@ -369,6 +369,14 @@ GlassApp.prototype.createMenu = function ()
 		   $("#f_staklo_1 input[name=sirina]:text").val("");
 		   $("#f_staklo_1 input[name=debljina]:text").val("");
 		   div_staklo_1.style.display = "none";
+		   
+		   
+		   var glass = new Glass();
+		   glass.init(app, 
+		    		{width: sirina, height: visina, depth: debljina },
+		    		{x: 40, y: 0, z: 0}, null);
+		    
+		   app.update_status();
 		}
 	});
 	
@@ -376,8 +384,15 @@ GlassApp.prototype.createMenu = function ()
 		alert("opcija 2");
 	}); 
 	
+	app.update_status();
+	
+};
+
+GlassApp.prototype.update_status = function() {
+	
 	$("#status span").html(this.glasses.length);
 };
+
 
 function between(num, from, to) {
 	
