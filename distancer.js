@@ -22,6 +22,8 @@ Distancer.prototype.init = function(app, geom, pos, id)
     
 	this.setPosition(this.pos.x, this.pos.y, this.pos.z);
 	
+	if (id === -1)
+		return;
 	
 	// dodaj u matricu ovaj distancer
 	if (!(id in app.glasses))

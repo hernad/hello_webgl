@@ -24,18 +24,19 @@ GlassApp.prototype.init = function(param)
 
     this.glasses = [];
     
-    
+    /*
     var gdg_1 = new GDG();
     var app = this;
     gdg_1.init(app, 
     		{width: 5, height: 12, depth_out: 4, depth_distancer: 2, depth_in: 6  },
     		{x: -20, y: 0, z: 0}, null);
 	
+	*/
     var gdg_2 = new GDG();
     gdg_2.init(app, 
     		{width: 9, height: 20, depth_out: 4, depth_distancer: 4, depth_in: 6  },
     		{x: 0, y: 0, z: 0}, null);
-    
+   
     
 	this.createCameraControls();
 	
@@ -347,15 +348,22 @@ GlassApp.prototype.createMenu = function ()
 		var div_staklo_1 = document.getElementById("d_staklo_1");
 		div_staklo_1.style.display = "block";
 		
-	}); 
+	});
+	
+	$("#m_btn_2").bind('click',  function() {
+		console.log("opcija 2");
+		
+		var div_staklo_2 = document.getElementById("d_staklo_2");
+		div_staklo_2.style.display = "block";
+		
+	});	
 	
 	// forma jednoslojno staklo:
-	
 	$("#f_staklo_1 input:button").bind('click', function(event) {
 		
-		var visina = $("#f_staklo_1 input[name=visina]:text").val();
-		var sirina = $("#f_staklo_1 input[name=sirina]:text").val();
-		var debljina = $("#f_staklo_1 input[name=debljina]:text").val();
+		var visina = Number($("#f_staklo_1 input[name=visina]:text").val());
+		var sirina = Number$("#f_staklo_1 input[name=sirina]:text").val());
+		var debljina = Number($("#f_staklo_1 input[name=debljina]:text").val());
 		
 		console.log("visina:" + visina);
 		console.log("sirina:" +  sirina);
@@ -365,11 +373,9 @@ GlassApp.prototype.createMenu = function ()
 		if (isNaN(visina) || isNaN(sirina) || isNaN(debljina) || !between(visina, 1, 20) || !between(sirina, 1, 20) || !between(debljina, 1, 10)) 
 			alert("neispravan unos: v:" + visina + "/ s:" + sirina + "/ d:" + debljina);
 		else {
-		   $("#f_staklo_1 input[name=visina]:text").val("");
-		   $("#f_staklo_1 input[name=sirina]:text").val("");
-		   $("#f_staklo_1 input[name=debljina]:text").val("");
-		   div_staklo_1.style.display = "none";
-		   
+			
+		   reset_form_text_fields("f_staklo_1");
+		   $("#d_staklo_1").css("display", "none");
 		   
 		   var glass = new Glass();
 		   glass.init(app, 
@@ -379,10 +385,65 @@ GlassApp.prototype.createMenu = function ()
 		   app.update_status();
 		}
 	});
+
+	$("#f_staklo_1").keydown(function (event) { 
+		if (event.keyCode === 27) {
+			reset_form_text_fields("f_staklo_1");
+			$("#d_staklo_1").css("display", "none");
+		}
+	});
 	
-	$("#m_btn_2").bind('click',  function() {
-		alert("opcija 2");
-	}); 
+	
+	// forma dvoslojno staklo
+	$("#f_staklo_2 input:button").bind('click', function(event) {
+		
+		var visina = Number($("#f_staklo_2 input[name=visina]:text").val());
+		var sirina = Number($("#f_staklo_2 input[name=sirina]:text").val());
+		var debljina_in = Number($("#f_staklo_2 input[name=debljina_in]:text").val());
+		var debljina_dist = Number($("#f_staklo_2 input[name=debljina_dist]:text").val());
+		var debljina_out = Number($("#f_staklo_2 input[name=debljina_out]:text").val());
+		
+		console.log("visina:" + visina);
+		console.log("sirina:" +  sirina);
+		console.log("debljina_in:" + debljina_in);
+		console.log("debljina_dist:" + debljina_dist);
+		console.log("debljina_out:" + debljina_out);
+		
+		if (isNaN(visina) || isNaN(sirina) || isNaN(debljina_in) || 
+			isNaN(debljina_out) || isNaN(debljina_dist)	|| 
+			!between(visina, 1, 20) || !between(sirina, 1, 20) || 
+			!between(debljina_in, 1, 10) || !between(debljina_dist, 1, 10) || !between(debljina_out, 1, 10))
+			alert("neispravan unos: v:" + visina + "/ s:" + sirina + "/ d_in:" + debljina_in + 
+				  "/ d_dist:" + debljina_dist + "/ d_out:" + debljina_out);
+		else {
+			
+		   
+		   
+		   var glass = new GDG();
+		   glass.init(app, 
+		    		{width: sirina, height: visina, depth_in: debljina_in, depth_distancer: debljina_dist, depth_out: debljina_out },
+		    		{x: -20, y: 0, z: 0}, null);
+		    
+		   app.update_status();
+		   
+		   reset_form_text_fields("f_staklo_2");
+		   $("#d_staklo_2").css("display", "none");
+		   
+		}
+	});
+	
+	$("#f_staklo_2").keydown(function (event) { 
+		if (event.keyCode === 27) {
+			reset_form_text_fields("f_staklo_2");
+			$("#d_staklo_2").css("display", "none");
+		}
+	});
+	
+
+	
+	$('h1').map(function (){
+		return this.firstChild;
+	}).before("> ").after(" <");
 	
 	app.update_status();
 	
@@ -402,6 +463,21 @@ function between(num, from, to) {
 	   return true;
 }
 
+function reset_form_text_fields(frm_id) {
+	
+  /*
+  $("#f_staklo_2 input[name=visina]:text").val("");
+  $("#f_staklo_2 input[name=sirina]:text").val("");
+  $("#f_staklo_2 input[name=debljina_in]:text").val("");
+  $("#f_staklo_2 input[name=debljina_dist]:text").val("");
+  $("#f_staklo_2 input[name=debljina_out]:text").val("");
+  */
+  
+  $("#" + frm_id + " input:text").val(function () {
+	  return this.defaultValue;
+  });
+	
+}
 
 GlassApp.CAMERA_RADIUS = 10;
 GlassApp.MIN_DISTANCE_FACTOR = 1.1;

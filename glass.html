@@ -61,7 +61,10 @@
 </head>
 
 <body>
-<h1>Glass constructor</h1>
+<h1>Konstruktor stakla</h1>
+
+
+<!-- begin meni  -->
 <div id="menu">
 
 <ul>
@@ -70,6 +73,7 @@
    <li><input id="m_btn_2" type="button" value="Dvoslojno"></input></li>
 </ul>
 </div>
+<!-- end meni  -->
 
 <div id="container" style="width:100%; height:700px; position:absolute"></div>
 
@@ -94,10 +98,14 @@
 	 </div>
 </div>
 
+
+<!-- statusna linija -->
 <div id="status">
 Broj stakala: <span>0</span>
 </div>
+<!-- end statusna linija -->
 
+<!-- begin jednoslojno forma staklo -->
 <div id="d_staklo_1">
 <form id="f_staklo_1" action="">
    
@@ -119,11 +127,6 @@ Broj stakala: <span>0</span>
      </ol>
    </fieldset>
    
-   <!-- 
-   <fieldset class="submit_s1" >
-      <input type="submit" name="submit" value="Dodaj staklo" />
-   </fieldset>
-    -->
    
    <fieldset class="submit_s1" >
       <input type="button" name="submit" value="Dodaj staklo" />
@@ -131,6 +134,56 @@ Broj stakala: <span>0</span>
       
 </form>
 </div>
+
+<!-- end jednoslojno staklo  -->
+
+
+
+<!-- begin dvoslojno forma staklo -->
+<div id="d_staklo_2">
+<form id="f_staklo_2" action="">
+   
+   <fieldset>
+     <legend>Dimenzije dvoslojnog stakla</legend>
+     <ol>
+      <li>
+        <label for="visina">Visina:</label>
+        <input name="visina" type="text" placeholder="1..20" />
+      </li>
+      <li>
+        <label for="sirina">Širina:</label>
+        <input name="sirina" type="text" placeholder="1..20" />
+      </li>
+      </ol>
+   </fieldset>
+   
+   <fieldset>
+      <legend>Debljine:</legend>   
+      <ol>
+      <li>
+        <label for="debljina_out">Vanjsko staklo:</label>
+        <input name="debljina_out" type="text" placeholder="1..10" />
+      </li>   
+      <li>
+        <label for="debljina_dist">Distancer:</label>
+        <input name="debljina_dist" type="text" placeholder="1..10" />
+      </li>
+      <li>
+        <label for="debljina_in">Unutrašnje staklo:</label>
+        <input name="debljina_in" type="text" placeholder="1..10" />
+      </li>       
+     </ol>
+   </fieldset>
+
+   <fieldset class="submit_s1" >
+      <input type="button" name="submit" value="Dodaj staklo" />
+   </fieldset>
+      
+</form>
+</div>
+
+<!-- end dvoslojno staklo  -->
+
 
 
 <div id="commands" >

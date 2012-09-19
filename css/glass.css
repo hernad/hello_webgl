@@ -193,7 +193,7 @@ h1 {
    border-radius: 5px;
 }
 
-/* ---- forma staklo 1 ----*/
+/* ---- forma jednoslojno staklo ----*/
 
 #d_staklo_1 {
 
@@ -212,8 +212,7 @@ h1 {
   width: 15em;
   height: auto;
   background-color: rgba(200, 200, 220, 0.9);	
- 
-	
+ 	
 }
 
 #f_staklo_1 fieldset {
@@ -270,6 +269,84 @@ h1 {
 	width: 80%;
 	align: center;
 }
+/* ---- end forma jednoslojno staklo ----*/
+
+
+/* ---- forma jednoslojno staklo ----*/
+
+#d_staklo_2 {
+
+  float: right;
+  display: none;
+  z-index: 10;
+  position: absolute;
+  right: 2%;
+  top: 8%;
+  
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  border: 1px solid green;
+  border-radius: 4px;
+    
+  width: 15em;
+  height: auto;
+  background-color: rgba(200, 200, 220, 0.9);	
+ 	
+}
+
+#f_staklo_2 fieldset {
+	position: relative;
+	width: 95%;
+	border-style: solid white;
+	padding: 0;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+}
+
+#f_staklo_2 ol {
+   list-style: none;	
+}
+
+#f_staklo_2 li {
+	height: 1.8em;
+	/*background-color: green;
+	margin-bottom: 2px;*/
+	margin-left: -1.5em;
+}
+
+#f_staklo_2 label {
+  clear: left;
+  float: left;	
+  width: 8em;
+  margin-right: 0.6em;
+  margin-top: 0.2em;
+  text-align: right;
+  background-color: transparent;	
+}
+
+#f_staklo_2 li input[type="text"] {
+	background-color: yellow;
+	width: 3em;
+}
+
+#d_staklo_2 fieldset.submit_s1 {
+	float: none;
+	display: block;
+	border-style: none;
+	
+	color: blue;
+	align: center;
+}
+
+#f_staklo_2 input[type="button"] {
+	background-color: yellow;
+    margin-left: 10%;
+    margin-right: 10%;
+	width: 80%;
+	align: center;
+}
+/* ---- end forma jednoslojno staklo ----*/
+
 
 /* ---- status ---- */
 

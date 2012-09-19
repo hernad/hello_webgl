@@ -22,6 +22,9 @@ Glass.prototype.init = function(app, geom, pos, id)
     
 	this.setPosition(this.pos.x, this.pos.y + this.height/2, this.pos.z);
 	
+	if (id == -1)
+		return;
+	
 	// dodaj u matricu ovo staklo
 	if (!(id in app.glasses))
 	     app.glasses.push(this);
