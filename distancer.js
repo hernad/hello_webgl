@@ -67,9 +67,13 @@ Distancer.prototype.handleMouseUp = function(x, y, point, normal)
 
 Distancer.prototype.handleMouseOver = function()
 {
+	/*
+	 
 	// ovo henlidra app objekat
 	// on se pretplatio na "over" dogadjaj
 	this.publish("over", this.id);
+	
+	*/
 	
 };
 

@@ -16,10 +16,10 @@ h1 {
     /*background-image: url('../images/pod.png');*/
 	
 	/* background-repeat: no-repeat; */
-	background-repeat: repeat;
+	/* background-repeat: repeat; */
 	
 	width:98%;
-	height:90%;
+	height:85%;
 	position:absolute;
 	background-color: DargGray;
 }
@@ -29,8 +29,9 @@ h1 {
 } 
 
 .callout {
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
+    position:absolute;
+    
+    border: 1px solid green;
     border-radius: 3px;
 	display:none;
 	text-align:center;
@@ -40,8 +41,8 @@ h1 {
 	height:140px;
 	background-color: rgba(200, 200, 200, 0.3);	
 	z-index:0;
-	position:absolute;
-	border: 1px solid green;
+	
+	
 	color:#990000;
 }
 
@@ -101,7 +102,166 @@ h1 {
 }
 
 #commands {
+ 
+ position: absolute;
+ /*margin-top: 5px;*/
+ padding-top: 5px;
+ bottom:0; 
+ height: 2em;   /* Height of the footer */
+   
+ line-height: 1.4em;
+ /*padding: 0 2px 0 2px;*/
+ border: solid 1px white;
+ 
+ border-right-style:none;
+ border-left-style:none;
+
  position: absolute; 
- top:720px;
+ 
  color: white;
+ text-align: center;
+ width: 100%;
+}
+
+
+/*====== menu  ==========*/
+
+#menu {
+   
+	float: right;
+	position: absolute;
+	top: 10px;
+	right: 2%;
+    z-index: 10;
+}
+
+#menu ul {
+  list-style-type: none;
+
+}
+
+#menu ul li {
+
+  float: left;
+ 
+ /* 
+  margin-left: auto; 
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  */
+  
+  position: relative;
+  
+  margin-right: 6px;
+  width: 120px;
+  height: 40px;
+  font-size: 1.1em;
+
+
+  background-color: none;
+}
+
+#menu ul li span{
+
+  text-align: right;
+  color: white;
+  font-size: 1.1em;
+  line-height: 1.9em;
+  font-family: sans-serif;  
+}
+
+#menu ul li input[type="button"] {
+	
+   /* clear: both; */
+
+   float: left;
+ 
+   position: relative;
+   margin-top: -2px;
+
+   margin-left: 5px;
+
+   font-size: 1.0em;
+   line-height: 1.8em;
+   width: 90%;
+   
+   /* height: 2em; */
+   color: white;
+   background-color: DarkBlue;
+   border: solid 2px white;
+   border-radius: 5px;
+}
+
+/* ---- forma staklo 1 ----*/
+
+#d_staklo_1 {
+
+  display: none;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  border: 1px solid green;
+  border-radius: 4px;
+    
+  width: 15em;
+  height: auto;
+  background-color: rgba(200, 200, 220, 0.4);	
+  z-index:0;
+  position:absolute;
+	
+}
+
+#f_staklo_1 fieldset {
+	position: relative;
+	width: 95%;
+	border-style: solid white;
+	padding: 0;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+}
+
+#f_staklo_1 ol {
+   list-style: none;	
+}
+
+#f_staklo_1 li {
+	height: 1.8em;
+	/*background-color: green;
+	margin-bottom: 2px;*/
+	margin-left: -1.5em;
+}
+
+#f_staklo_1 label {
+  clear: left;
+  float: left;	
+  width: 5em;
+  margin-right: 0.6em;
+  margin-top: 0.2em;
+  text-align: right;
+  background-color: transparent;	
+}
+
+#f_staklo_1 li input[type="text"] {
+	background-color: yellow;
+	width: 3em;
+}
+
+#d_staklo_1 fieldset.submit_s1 {
+	float: none;
+	display: block;
+	border-style: none;
+	
+	/*padding-left: 5.3em;*/
+	
+	/*left: 30px;*/
+	color: blue;
+	align: center;
+}
+
+#f_staklo_1 input[type="submit"] {
+	background-color: yellow;
+    margin-left: 10%;
+    margin-right: 10%;
+	width: 80%;
+	align: center;
 }

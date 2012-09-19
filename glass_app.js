@@ -26,39 +26,7 @@ GlassApp.prototype.init = function(param)
     this.distanceri = [];
     this.gdg = [];
 	
-    /*
-	// ========= prvo dvoslojno staklo sa distancerom ============
-	// prvo staklo
-	var glass = new Glass();
-	// podigni za dvije visine
-	var g_height = 20; 
-	var g_width = 10;
-	var g_debljina = 6;
-	glass.init(this, 
-		{width: g_width, height: g_height, depth: g_debljina}, 
-		{x: 0, y: g_height/2, z: 0}, Glass.IDG1);
-
-	var distanc = new Distancer();
-	var d_debljina = 2;
-	distanc.init(this, 
-	   {width: g_width, height: g_height, depth: d_debljina}, 
-	   {x: 0, y: g_height/2, z: g_debljina/2 + d_debljina/2}, Distancer.IDD1);
-	
-	
-	// drugo staklo
-	var glass = new Glass();
-	var g_height = 20; 
-	var g_width = 10;
-	var g_debljina_2 = 4;
-	
-	// pozicija narednog stakla moramo dodati pola 1/2 debljine predhodnog stakla
-	// + kompletnu debljinu distanceri i 1/2 novog stakla
-	glass.init(this, 
-		{width: g_width, height: g_height, depth: g_debljina_2}, 
-		{x: 0, y: g_height/2, z: g_debljina/2 + d_debljina + g_debljina_2/2}, Glass.IDG2);
-	
-	// === END kompozicija stakla 1
-	*/
+    
     
     var gdg_1 = new GDG();
     var app = this;
@@ -71,44 +39,10 @@ GlassApp.prototype.init = function(param)
     		{width: 9, height: 20, depth_out: 4, depth_distancer: 4, depth_in: 6  },
     		{x: 0, y: 0, z: 0}, 1);
     
-    /*
-	// ========= drugo dvoslojno staklo sa distancerom ============
-	// prvo staklo
-	var glass = new Glass();
-	// podigni za dvije visine
-	var g_height = 12; 
-	var g_width = 5;
-	var g_debljina = 4;
-	
-	glass.init(this, 
-		{width: g_width, height: g_height, depth: g_debljina}, 
-		{x: 20, y: 0, z: 0}, Glass.IDG3);
-
-	var distanc = new Distancer();
-	var d_debljina = 1;
-	// ovaj mi distancer nije dobro pozicioniran kao prvi ?!
-	// neki je bug po y osi ... rucno cu ga sada nastimati sa delta var
-	var delta = 4;
-	distanc.init(this, 
-	   {width: g_width, height: g_height, depth: d_debljina}, 
-	   {x: 20, y: 0, z: g_debljina/2 + d_debljina/2}, Distancer.IDD2);
-	
-	
-	// drugo staklo
-	var glass = new Glass();
-	var g_debljina_2 = 2;
-	
-	// pozicija narednog stakla moramo dodati pola 1/2 debljine predhodnog stakla
-	// + kompletnu debljinu distanceri i 1/2 novog stakla
-	glass.init(this, 
-		{width: g_width, height: g_height, depth: g_debljina_2}, 
-		{x: 20, y: 0, z: g_debljina/2 + d_debljina + g_debljina_2/2}, Glass.IDG4);
-	
-	// ----- END kompozicija stakla 1
-	*/	
-	
     
 	this.createCameraControls();
+	
+	this.createMenu();
 };
 
 // kada sklonimo misa sa stakla skloni callout
@@ -402,6 +336,19 @@ GlassApp.prototype.update = function()
 	//this.headlight.position.copy(normcamerapos);
 
 	Sim.App.prototype.update.call(this);
+};
+
+
+GlassApp.prototype.createMenu = function ()
+{
+	$("#m_btn_1").bind('click',  function() {
+		alert("opcija 1");
+	}); 
+	
+	$("#m_btn_2").bind('click',  function() {
+		alert("opcija 2");
+	}); 
+	
 };
 
 

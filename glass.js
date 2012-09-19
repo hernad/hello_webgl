@@ -65,9 +65,11 @@ Glass.prototype.handleMouseUp = function(x, y, point, normal)
 
 Glass.prototype.handleMouseOver = function()
 {
+	/*
 	// ovo henlidra app objekat
 	// on se pretplatio na "over" dogadjaj
-	this.publish("over", this.id);	
+	this.publish("over", this.id);
+	*/	
 };
 
 	
