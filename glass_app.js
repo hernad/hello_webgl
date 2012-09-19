@@ -362,7 +362,7 @@ GlassApp.prototype.createMenu = function ()
 	$("#f_staklo_1 input:button").bind('click', function(event) {
 		
 		var visina = Number($("#f_staklo_1 input[name=visina]:text").val());
-		var sirina = Number$("#f_staklo_1 input[name=sirina]:text").val());
+		var sirina = Number($("#f_staklo_1 input[name=sirina]:text").val());
 		var debljina = Number($("#f_staklo_1 input[name=debljina]:text").val());
 		
 		console.log("visina:" + visina);

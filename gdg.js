@@ -35,7 +35,6 @@ GDG.prototype.init = function(app, geom, pos, id)
 	
 	
 	this.glass_in = new Glass();
-	debugger;
 	this.glass_in.init(app, 
         {width: this.width, height: this.height, depth: this.depth_in}, 
 		{x: pos.x, y: pos.y, z: pos.z + this.depth_out/2 + this.depth_distancer + this.depth_in/2 }, -1);
