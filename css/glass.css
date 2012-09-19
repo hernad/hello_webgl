@@ -132,7 +132,7 @@ h1 {
 	position: absolute;
 	top: 10px;
 	right: 2%;
-    z-index: 10;
+    z-index: 5;
 }
 
 #menu ul {
@@ -197,7 +197,13 @@ h1 {
 
 #d_staklo_1 {
 
+  float: right;
   display: none;
+  z-index: 10;
+  position: absolute;
+  right: 2%;
+  top: 8%;
+  
   padding-left: 0.5em;
   padding-right: 0.5em;
   border: 1px solid green;
@@ -205,9 +211,8 @@ h1 {
     
   width: 15em;
   height: auto;
-  background-color: rgba(200, 200, 220, 0.4);	
-  z-index:0;
-  position:absolute;
+  background-color: rgba(200, 200, 220, 0.9);	
+ 
 	
 }
 
@@ -258,10 +263,27 @@ h1 {
 	align: center;
 }
 
-#f_staklo_1 input[type="submit"] {
+#f_staklo_1 input[type="button"] {
 	background-color: yellow;
     margin-left: 10%;
     margin-right: 10%;
 	width: 80%;
 	align: center;
+}
+
+/* ---- status ---- */
+
+#status {
+  position: fixed;
+  width: 10em;
+  text-align: center;	
+  margin-left: 40%;
+  margin-right:40%;
+  top: 5%; 	
+  padding: 3px 3px 3px 3px;
+  border: solid 2px white;
+  border-radius: 5px;
+  font-family: sans-serif;
+  color: white;
+  background-color: #0099FF;
 }

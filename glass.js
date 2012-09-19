@@ -24,7 +24,7 @@ Glass.prototype.init = function(app, geom, pos, id)
 	
 	// dodaj u matricu ovo staklo
 	if (!(id in app.glasses))
-	     app.glasses[id] = this;
+	     app.glasses.push(this);
 	else {
 		delete app.glasses[id];
 		app.glasses[id] = this;
@@ -73,10 +73,5 @@ Glass.prototype.handleMouseOver = function()
 };
 
 	
-Glass.IDG1 = 1;
-Glass.IDG2 = 2;
-Glass.IDG3 = 3;
-Glass.IDG4 = 4;
-
 Glass.CALLOUT_Y_OFFSET = 50;
 

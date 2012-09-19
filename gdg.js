@@ -40,11 +40,11 @@ GDG.prototype.init = function(app, geom, pos, id)
 
 	
 	// dodaj u matricu ovo staklo
-	if (!(id in app.gdg))
-	     app.gdg[id] = this;
+	if (!(id in app.glasses))
+	     app.glasses.push(this);
 	else {
-		delete app.gdg[id];
-		app.gdg[id] = this;
+		delete app.glasses[id];
+		app.glasses[id] = this;
 	}
 	
 };

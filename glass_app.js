@@ -23,21 +23,18 @@ GlassApp.prototype.init = function(param)
 	this.setFloor();
 
     this.glasses = [];
-    this.distanceri = [];
-    this.gdg = [];
-	
     
     
     var gdg_1 = new GDG();
     var app = this;
     gdg_1.init(app, 
     		{width: 5, height: 12, depth_out: 4, depth_distancer: 2, depth_in: 6  },
-    		{x: -20, y: 0, z: 0}, 1);
+    		{x: -20, y: 0, z: 0}, null);
 	
     var gdg_2 = new GDG();
     gdg_2.init(app, 
     		{width: 9, height: 20, depth_out: 4, depth_distancer: 4, depth_in: 6  },
-    		{x: 0, y: 0, z: 0}, 1);
+    		{x: 0, y: 0, z: 0}, null);
     
     
 	this.createCameraControls();
@@ -341,15 +338,54 @@ GlassApp.prototype.update = function()
 
 GlassApp.prototype.createMenu = function ()
 {
+	var div_staklo_1 = document.getElementById("d_staklo_1");
+	
+	
 	$("#m_btn_1").bind('click',  function() {
-		alert("opcija 1");
+		console.log("opcija 1");
+		
+		var div_staklo_1 = document.getElementById("d_staklo_1");
+		div_staklo_1.style.display = "block";
+		
 	}); 
+	
+	// forma jednoslojno staklo:
+	
+	$("#f_staklo_1 input:button").bind('click', function(event) {
+		
+		var visina = $("#f_staklo_1 input[name=visina]:text").val();
+		var sirina = $("#f_staklo_1 input[name=sirina]:text").val();
+		var debljina = $("#f_staklo_1 input[name=debljina]:text").val();
+		
+		console.log("visina:" + visina);
+		console.log("sirina:" +  sirina);
+		console.log("debljina:" + debljina);
+		
+		
+		if (isNaN(visina) || isNaN(sirina) || isNaN(debljina) || !between(visina, 1, 20) || !between(sirina, 1, 20) || !between(debljina, 1, 10)) 
+			alert("neispravan unos: v:" + visina + "/ s:" + sirina + "/ d:" + debljina);
+		else {
+		   $("#f_staklo_1 input[name=visina]:text").val("");
+		   $("#f_staklo_1 input[name=sirina]:text").val("");
+		   $("#f_staklo_1 input[name=debljina]:text").val("");
+		   div_staklo_1.style.display = "none";
+		}
+	});
 	
 	$("#m_btn_2").bind('click',  function() {
 		alert("opcija 2");
 	}); 
 	
+	$("#status span").html(this.glasses.length);
 };
+
+function between(num, from, to) {
+	
+	if (num < from || num > to)
+	   return false;
+	else
+	   return true;
+}
 
 
 GlassApp.CAMERA_RADIUS = 10;

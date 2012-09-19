@@ -24,11 +24,11 @@ Distancer.prototype.init = function(app, geom, pos, id)
 	
 	
 	// dodaj u matricu ovaj distancer
-	if (!(id in app.distanceri))
-	     app.distanceri[id] = this;
+	if (!(id in app.glasses))
+	     app.glasses.push(this);
 	else {
-		delete app.distanceri[id];
-		app.distanceri[id] = this;
+		delete app.glasses[id];
+		app.glasses[id] = this;
 	}
 	
 	
