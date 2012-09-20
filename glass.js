@@ -14,6 +14,16 @@ Glass.prototype.init = function(app, geom, pos, parent)
 	this.width = geom.width || 10;
 	this.depth = geom.depth || 2;
 
+	if (pos.x === null)
+    {
+
+	   if (app.glasses.length > 0)
+	      app.x += this.width/2;
+	      
+	   pos.x = app.x;   
+	   app.x += this.width / 2 + GlassApp.X_DELTA;
+    }
+	
 	this.pos = pos;
 	
 	var id = 0;
@@ -28,6 +38,7 @@ Glass.prototype.init = function(app, geom, pos, parent)
 	
 	this.id = id;
 	
+
 	this.update_geometry(this.width, this.height, this.depth);
     
 	this.setPosition(this.pos.x, this.pos.y + this.height/2, this.pos.z);

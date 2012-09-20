@@ -24,12 +24,13 @@ GlassApp.prototype.init = function(param)
 
     this.glasses = [];
     
-   
+    // početna x koodrinata
+    this.x = GlassApp.X_START;
+    
     var gdg_2 = new GDG();
-    debugger;
     gdg_2.init(app, 
     		{width: 9, height: 15, depth_out: 4, depth_distancer: 1, depth_in: 6  },
-    		{x: 0, y: 0, z: 0});
+    		{x: null, y: 0, z: 0});
    
     
 	this.createCameraControls();
@@ -80,21 +81,26 @@ GlassApp.prototype.onGlassOver = function(id)
 
 	var glass = this.glasses[id-1];
 	
-
+	var contentsHtml;
+	var headerHtml;
+	var screenpos;
+	
 	if (glass instanceof Glass)
 	{
 	   // W-width, H-height, T-thickness
-	   var contentsHtml = "V: " + glass.height + " Š: " + glass.width + " D: " + glass.depth + "<br/>";
-	   var headerHtml = "Obično staklo";
+	   contentsHtml = "V: " + glass.height + " Š: " + glass.width + " D: " + glass.depth + "<br/>";
+	   headerHtml = "Obično staklo";
+	   
 	   // Place the callout near the object and show it
-	   var screenpos = this.getObjectScreenPosition(this.glasses[id-1]);
+	   screenpos = this.getObjectScreenPosition(this.glasses[id-1]);
 	}
 	else {
-		var contentsHtml = "V: " + glass.height + " Š: " + glass.width + 
+		contentsHtml = "V: " + glass.height + " Š: " + glass.width + 
 		                   "<br/>D vani: " + glass.depth_in + " dist: " + glass.depth_distancer + " unutra: " + glass.depth_out + " <br>";
-		var headerHtml = "Dvoslojno staklo";
+		headerHtml = "Dvoslojno staklo";
+		
 		// Pozicionirajmo se pored unutrasnjeg stakla
-		var screenpos = this.getObjectScreenPosition(this.glasses[id-1].glass_in);
+		screenpos = this.getObjectScreenPosition(this.glasses[id-1].glass_in);
 	}
 		
 	headerHtml += "[" + id + "]";
@@ -117,16 +123,11 @@ GlassApp.prototype.onGlassOver = function(id)
 	calloutContents.innerHTML = contentsHtml;
 	callout.glassID = this.selectedControl;
 	
-
-	
-	// dinamicki setujem stil za callout div
-	// non => block
 	callout.style.display = "block";
 	// offsetWidth ?
 
 	callout.style.left = (screenpos.x - callout.offsetWidth / 2)+ "px";
 	callout.style.top = (screenpos.y + Glass.CALLOUT_Y_OFFSET) + "px";
-	
 	
 	/*
 	document.getElementById('edx').value = glass.height.toString();
@@ -314,7 +315,7 @@ GlassApp.prototype.createMenu = function ()
 		   var glass = new Glass();
 		   glass.init(app, 
 		    		{width: sirina, height: visina, depth: debljina },
-		    		{x: 40, y: 0, z: 0}, null);
+		    		{x: null, y: 0, z: 0}, null);
 		    
 		   app.update_status();
 		}
@@ -351,13 +352,12 @@ GlassApp.prototype.createMenu = function ()
 			!between(debljina_in, 1, 10) || !between(debljina_dist, 1, 10) || !between(debljina_out, 1, 10))
 			alert("neispravan unos: v:" + visina + "/ s:" + sirina + "/ d_in:" + debljina_in + 
 				  "/ d_dist:" + debljina_dist + "/ d_out:" + debljina_out);
-		else {
-			
+		else {		
 		    
 		   var glass = new GDG();
 		   glass.init(app, 
 		    		{width: sirina, height: visina, depth_in: debljina_in, depth_distancer: debljina_dist, depth_out: debljina_out },
-		    		{x: -20, y: 0, z: 0}, null);
+		    		{x: null, y: 0, z: 0}, null);
 		    
 		   app.update_status();
 		   
@@ -373,8 +373,6 @@ GlassApp.prototype.createMenu = function ()
 			$("#d_staklo_2").css("display", "none");
 		}
 	});
-	
-
 	
 	$('h1').map(function (){
 		return this.firstChild;
@@ -414,7 +412,9 @@ function reset_form_text_fields(frm_id) {
 	
 }
 
-GlassApp.X_START = -60;
+GlassApp.X_START = -55;
+GlassApp.X_DELTA = 3;
+
 GlassApp.CAMERA_RADIUS = 10;
 GlassApp.MIN_DISTANCE_FACTOR = 1.1;
 GlassApp.MAX_DISTANCE_FACTOR = 10;

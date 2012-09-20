@@ -15,6 +15,16 @@ GDG.prototype.init = function(app, geom, pos)
 	this.depth_out = geom.depth_out || 2;
 	this.depth_in = geom.depth_in || 2;
 	this.depth_distancer = geom.depth_distancer || 1;
+
+	if (pos.x === null)
+    {
+
+	   if (app.glasses.length > 0)
+	      app.x += this.width/2;
+	      
+	   pos.x = app.x;   
+	   app.x += this.width / 2 + GlassApp.X_DELTA;
+    }
 	
 	this.pos = pos;
 	this.parent = null;
@@ -31,7 +41,9 @@ GDG.prototype.init = function(app, geom, pos)
 		delete app.glasses[id];
 		app.glasses[id] = this;
 	}
+
 	
+		
     this.glass_out = new Glass();
 	this.glass_out.init(app, 
         {width: this.width, height: this.height, depth: this.depth_out}, 
