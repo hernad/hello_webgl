@@ -47,8 +47,7 @@
 	
 	function onSelect(object)
 	{
-		debugger;
-		
+
 		// odaberi callout objekat
 		var glassID = parseInt(document.getElementById("glass_id").value);
 		app.selectGlass(glassID);
@@ -59,7 +58,6 @@
 
 	function onDelete(object)
 	{
-		debugger;
 		// odaberi callout objekat
 		var glassID = parseInt(document.getElementById("glass_id").value);
 		app.deleteGlass(glassID);
@@ -113,7 +111,11 @@
      -->
       
      <div id="selectButton" class="selectButton"> 
-		   <button onclick="onSelect(this);">Odaberi</button>
+		   
+		   <!-- 
+		     <button onclick="onSelect(this);">Odaberi</button>
+		   -->
+		    
 		   <button onclick="onDelete(this);">Brisi</button>
 	 </div>
 	 
@@ -204,7 +206,7 @@ Broj stakala: <span>0</span>
 
 
 <div id="commands" >
-Komande: MouseOver - edit Glass dimensions; mouse left-click+drag - rotate scene; right-click+drag - pane scene; mouse scrool - zoom; 
+Komande: MouseOver - briši staklo; mouse left-click+drag - rotate scene; right-click+drag - pane scene; mouse scrool - zoom; 
 </div>
 </body>
 

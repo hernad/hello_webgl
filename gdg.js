@@ -9,7 +9,8 @@ GDG.prototype = new Sim.Object();
 
 GDG.prototype.init = function(app, geom, pos)
 {
-	
+
+	this.app = app;
     this.height = geom.height || 10;
 	this.width = geom.width || 10;
 	this.depth_out = geom.depth_out || 2;
@@ -24,7 +25,7 @@ GDG.prototype.init = function(app, geom, pos)
 	      
 	   pos.x = app.x;   
 	   app.x += this.width / 2 + GlassApp.X_DELTA;
-    }
+    };
 	
 	this.pos = pos;
 	this.parent = null;
@@ -38,8 +39,8 @@ GDG.prototype.init = function(app, geom, pos)
 	     this.id = id;
 	}
 	else {
-		delete app.glasses[id];
-		app.glasses[id] = this;
+		delete app.glasses[id-1];
+		app.glasses[id-1] = this;
 	}
 
 	
@@ -62,4 +63,34 @@ GDG.prototype.init = function(app, geom, pos)
 		{x: pos.x, y: pos.y, z: pos.z + this.depth_out/2 + this.depth_distancer + this.depth_in/2 }, this);
 
 	
+};
+
+GDG.prototype.update_x = function(x) {
+	//this.glass_out.setPosition(x, this.pos.y + this.height/2, this.pos.z);
+    debugger;
+	this.glass_out.mesh.position.y;
+	
+};
+
+GDG.prototype.update_x = function(x) {
+	this.glass_out.update_x(x);
+	this.glass_in.update_x(x);
+	this.distancer.update_x(x);
+};
+
+
+GDG.prototype.remove_me = function()
+{
+	this.app.removeObject(this.glass_out);
+	this.app.removeObject(this.glass_in);
+	this.app.removeObject(this.distancer);
+
+};
+
+GDG.prototype.decrement_id = function()
+{
+   this.id -= 1;
+   this.glass_out.id -= 1;
+   this.distancer.id -= 1;
+   this.glass_in.id -= 1;
 };

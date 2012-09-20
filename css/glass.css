@@ -38,7 +38,7 @@ h1 {
 	margin:auto;
 	padding: 5px;
 	width: 200px;
-	height:140px;
+	height: auto;
 	background-color: rgba(200, 200, 200, 0.3);	
 	z-index:0;
 	
@@ -152,7 +152,6 @@ h1 {
   */
   
   position: relative;
-  
   margin-right: 6px;
   width: 120px;
   height: 40px;
@@ -176,7 +175,6 @@ h1 {
    /* clear: both; */
 
    float: left;
- 
    position: relative;
    margin-top: -2px;
 

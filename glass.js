@@ -9,7 +9,7 @@ Glass.prototype = new Sim.Object();
 
 Glass.prototype.init = function(app, geom, pos, parent)
 {
-	
+	this.app = app;
     this.height = geom.height || 10;
 	this.width = geom.width || 10;
 	this.depth = geom.depth || 2;
@@ -55,9 +55,16 @@ Glass.prototype.init = function(app, geom, pos, parent)
 	}
 	else {
 		delete app.glasses[id];
-		app.glasses[id] = this;
+		app.glasses[id-1] = this;
 	}
 	
+};
+
+Glass.prototype.update_x = function(x) {
+	var y = this.mesh.position.y;
+	var z = this.mesh.position.z;
+	
+	this.setPosition(x, y, z);
 };
 
 Glass.prototype.update_geometry = function(width, height, depth)
@@ -65,7 +72,6 @@ Glass.prototype.update_geometry = function(width, height, depth)
 	
     var geometry = new THREE.CubeGeometry(width, height, depth);
 	
-	//debugger;
 	var material = new THREE.MeshPhongMaterial({color: 0xffffff, ambient: 0xffffff, transparent: true, reflectivity: 1, opacity: 0.65} );		
     var mesh = new THREE.Mesh( geometry, material );
 
@@ -73,12 +79,6 @@ Glass.prototype.update_geometry = function(width, height, depth)
 	
     this.setObject3D(mesh);
     this.mesh = mesh;
-	
-	// zakreni ga
-    // Turn the canvas a bit so that we can see the 3D-ness
-    //this.mesh.rotation.y = Math.PI / 6;
-    //this.mesh.rotation.x = Math.PI / 12;
-	// ne zakreci objekat blento jedan nego kameru !
 	
     // generisi "over" event koji ce App objekat hendlirati sa funkcijom onGlassOver
 	this.subscribe("over", app, app.onGlassOver);
@@ -96,12 +96,21 @@ Glass.prototype.handleMouseOver = function()
 	
 	// ovo henlidra app objekat
 	// on se pretplatio na "over" dogadjaj
-	
-
 	this.publish("over", this.id);
 		
 };
 
+Glass.prototype.remove_me = function()
+{
+	this.app.removeObject(this);
+	delete app.glasses[this.id - 1];
+	
+};
+
+Glass.prototype.decrement_id = function()
+{
+   this.id = this.id - 1;	
+};
 	
 Glass.CALLOUT_Y_OFFSET = 50;
 

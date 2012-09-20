@@ -76,6 +76,12 @@ Distancer.prototype.update_geometry = function(width, height, depth)
 
 };
 
+Distancer.prototype.update_x = function(x) {
+	var y = this.mesh.position.y;
+	var z = this.mesh.position.z;
+	this.setPosition(x, y, z);
+};
+
 Distancer.prototype.handleMouseUp = function(x, y, point, normal)
 {
 	this.publish("selected", this.id);

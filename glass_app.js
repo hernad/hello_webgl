@@ -32,10 +32,21 @@ GlassApp.prototype.init = function(param)
     		{width: 9, height: 15, depth_out: 4, depth_distancer: 1, depth_in: 6  },
     		{x: null, y: 0, z: 0});
    
+    var gdg_3 = new GDG();
+    gdg_3.init(app, 
+    		{width: 9, height: 12, depth_out: 4, depth_distancer: 1, depth_in: 6  },
+    		{x: null, y: 0, z: 0});
+    
+    var gdg_4 = new GDG();
+    gdg_4.init(app, 
+    		{width: 9, height: 10, depth_out: 4, depth_distancer: 1, depth_in: 6  },
+    		{x: null, y: 0, z: 0});
     
 	this.createCameraControls();
 	
 	this.createMenu();
+	
+	this.wireApplication();
 };
 
 // kada sklonimo misa sa stakla skloni callout
@@ -198,11 +209,6 @@ GlassApp.prototype.selectGlass = function(id)
    */
 };
 
-GlassApp.prototype.deleteGlass = function(id) {
-	
-   alert("todo delete glass:" + id);	
-
-};
 
 // --------------------------------------
 // pravimo "pod" na koji ce ici stakla
@@ -293,6 +299,10 @@ GlassApp.prototype.createMenu = function ()
 		
 	});	
 	
+};
+
+GlassApp.prototype.wireApplication = function ()
+{
 	// forma jednoslojno staklo:
 	$("#f_staklo_1 input:button").bind('click', function(event) {
 		
@@ -382,11 +392,68 @@ GlassApp.prototype.createMenu = function ()
 	
 };
 
+
 GlassApp.prototype.update_status = function() {
 	
 	$("#status span").html(this.glasses.length);
 };
 
+
+GlassApp.prototype.deleteGlass = function(id) 
+{
+		
+	   var glass = this.glasses[id-1];
+	   
+	   glass.remove_me();
+	   delete app.glasses[id - 1];
+	   
+	   // sve elemente pomjeri jedno mjesto
+	   for(var i = id; i < app.glasses.length; i++) {
+		   app.glasses[i-1] = app.glasses[i];
+		   // moram smanjiti i id u samom glass/gdg objektu
+		   app.glasses[i-1].decrement_id();
+	   }
+	   
+	   // posljednji elemenat je visak;
+	   app.glasses.pop();
+	   
+	   this.ukloniRupe();
+	   
+	   this.update_status();
+};
+
+// treba srediti x koordinate nakon brisanja objekata 
+GlassApp.prototype.ukloniRupe = function()
+{
+	this.x = GlassApp.X_START;
+	
+	for(var i in app.glasses) {
+		
+	   var glass = app.glasses[i];
+	   
+
+	   if (i>0)
+		   this.x += glass.width/2;
+		      
+		x = this.x;   
+		this.x += glass.width / 2 + GlassApp.X_DELTA;
+		glass.update_x(x);
+			
+	}
+	
+};
+
+/*
+ 	if (pos.x === null)
+    {
+
+	   if (app.glasses.length > 0)
+	      app.x += this.width/2;
+	      
+	   pos.x = app.x;   
+	   app.x += this.width / 2 + GlassApp.X_DELTA;
+    }
+ */
 
 function between(num, from, to) {
 	
@@ -412,12 +479,14 @@ function reset_form_text_fields(frm_id) {
 	
 }
 
+// pozicija prvog stakla
 GlassApp.X_START = -55;
+// razmak izmedju dva stakla
 GlassApp.X_DELTA = 3;
 
 GlassApp.CAMERA_RADIUS = 10;
-GlassApp.MIN_DISTANCE_FACTOR = 1.1;
-GlassApp.MAX_DISTANCE_FACTOR = 10;
+GlassApp.MIN_DISTANCE_FACTOR = 1.5;
+GlassApp.MAX_DISTANCE_FACTOR = 15;
 GlassApp.ROTATE_SPEED = 1.0;
 GlassApp.ZOOM_SPEED = 3;
 GlassApp.PAN_SPEED = 0.2;
