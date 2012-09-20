@@ -7,27 +7,37 @@ Glass = function()
 
 Glass.prototype = new Sim.Object();
 
-Glass.prototype.init = function(app, geom, pos, id)
+Glass.prototype.init = function(app, geom, pos, parent)
 {
 	
     this.height = geom.height || 10;
 	this.width = geom.width || 10;
 	this.depth = geom.depth || 2;
-	
+
 	this.pos = pos;
 	
+	var id = 0;
+	if (parent instanceof GDG)
+		id = parent.id;
+	else
+		id = this.id;
+
 	this.id = id;
 	
 	this.update_geometry(this.width, this.height, this.depth);
     
 	this.setPosition(this.pos.x, this.pos.y + this.height/2, this.pos.z);
 	
-	if (id == -1)
+	// ako staklo nije samostalno ne dodaje se u matricu;
+	if (parent instanceof GDG)
 		return;
 	
 	// dodaj u matricu ovo staklo
-	if (!(id in app.glasses))
+	if (!(id in app.glasses)) {
 	     app.glasses.push(this);
+	     id = app.glasses.length;
+	     this.id = id;
+	}
 	else {
 		delete app.glasses[id];
 		app.glasses[id] = this;

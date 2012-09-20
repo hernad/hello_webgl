@@ -24,18 +24,12 @@ GlassApp.prototype.init = function(param)
 
     this.glasses = [];
     
-    /*
-    var gdg_1 = new GDG();
-    var app = this;
-    gdg_1.init(app, 
-    		{width: 5, height: 12, depth_out: 4, depth_distancer: 2, depth_in: 6  },
-    		{x: -20, y: 0, z: 0}, null);
-	
-	*/
+   
     var gdg_2 = new GDG();
+    debugger;
     gdg_2.init(app, 
-    		{width: 9, height: 20, depth_out: 4, depth_distancer: 4, depth_in: 6  },
-    		{x: 0, y: 0, z: 0}, null);
+    		{width: 9, height: 15, depth_out: 4, depth_distancer: 1, depth_in: 6  },
+    		{x: 0, y: 0, z: 0});
    
     
 	this.createCameraControls();
@@ -339,9 +333,9 @@ GlassApp.prototype.update = function()
 
 GlassApp.prototype.createMenu = function ()
 {
-	var div_staklo_1 = document.getElementById("d_staklo_1");
 	var app = this;
 	
+	// jednoslojno => otvori formu f_staklo_1
 	$("#m_btn_1").bind('click',  function() {
 		console.log("opcija 1");
 		
@@ -350,6 +344,7 @@ GlassApp.prototype.createMenu = function ()
 		
 	});
 	
+	// dvoslojno => otvori formu f_staklo_2
 	$("#m_btn_2").bind('click',  function() {
 		console.log("opcija 2");
 		
@@ -403,11 +398,13 @@ GlassApp.prototype.createMenu = function ()
 		var debljina_dist = Number($("#f_staklo_2 input[name=debljina_dist]:text").val());
 		var debljina_out = Number($("#f_staklo_2 input[name=debljina_out]:text").val());
 		
+		/*
 		console.log("visina:" + visina);
 		console.log("sirina:" +  sirina);
 		console.log("debljina_in:" + debljina_in);
 		console.log("debljina_dist:" + debljina_dist);
 		console.log("debljina_out:" + debljina_out);
+		*/
 		
 		if (isNaN(visina) || isNaN(sirina) || isNaN(debljina_in) || 
 			isNaN(debljina_out) || isNaN(debljina_dist)	|| 
@@ -417,8 +414,7 @@ GlassApp.prototype.createMenu = function ()
 				  "/ d_dist:" + debljina_dist + "/ d_out:" + debljina_out);
 		else {
 			
-		   
-		   
+		    
 		   var glass = new GDG();
 		   glass.init(app, 
 		    		{width: sirina, height: visina, depth_in: debljina_in, depth_distancer: debljina_dist, depth_out: debljina_out },
@@ -479,6 +475,7 @@ function reset_form_text_fields(frm_id) {
 	
 }
 
+GlassApp.X_START = -60;
 GlassApp.CAMERA_RADIUS = 10;
 GlassApp.MIN_DISTANCE_FACTOR = 1.1;
 GlassApp.MAX_DISTANCE_FACTOR = 10;

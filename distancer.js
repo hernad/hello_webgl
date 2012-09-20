@@ -7,7 +7,7 @@ Distancer = function()
 
 Distancer.prototype = new Sim.Object();
 
-Distancer.prototype.init = function(app, geom, pos, id)
+Distancer.prototype.init = function(app, geom, pos, parent)
 {
 	
     this.height = geom.height || 10;
@@ -16,18 +16,28 @@ Distancer.prototype.init = function(app, geom, pos, id)
 	
 	this.pos = pos;
 	
+	var id = 0;
+	if (parent instanceof GDG)
+		id = parent.id;
+	else
+		id = this.id;
+
 	this.id = id;
 	
 	this.update_geometry(this.width/2, this.height / 2, this.depth / 2);
     
 	this.setPosition(this.pos.x, this.pos.y, this.pos.z);
 	
-	if (id === -1)
+	// ovo je dio kompozitnog stakla ne dodaji ga u matricu stakala
+	if (parent instanceof GDG)
 		return;
 	
-	// dodaj u matricu ovaj distancer
-	if (!(id in app.glasses))
+	// dodaj u matricu distancer, iako ovo bas i nema smisla jer distanceri nikada nisu samostalni
+	if (!(id in app.glasses)) {
 	     app.glasses.push(this);
+	     id = app.glasses.length;
+	     this.id = id;
+	}
 	else {
 		delete app.glasses[id];
 		app.glasses[id] = this;
