@@ -17,11 +17,15 @@ Glass.prototype.init = function(app, geom, pos, parent)
 	this.pos = pos;
 	
 	var id = 0;
-	if (parent instanceof GDG)
+	if (parent instanceof GDG) {
 		id = parent.id;
-	else
+	    this.parent = parent;
+	}
+	else {
 		id = this.id;
-
+	    this.parent = null;
+	}
+	
 	this.id = id;
 	
 	this.update_geometry(this.width, this.height, this.depth);
@@ -78,11 +82,13 @@ Glass.prototype.handleMouseUp = function(x, y, point, normal)
 
 Glass.prototype.handleMouseOver = function()
 {
-	/*
+	
 	// ovo henlidra app objekat
 	// on se pretplatio na "over" dogadjaj
+	
+
 	this.publish("over", this.id);
-	*/	
+		
 };
 
 	

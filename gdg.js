@@ -17,6 +17,7 @@ GDG.prototype.init = function(app, geom, pos)
 	this.depth_distancer = geom.depth_distancer || 1;
 	
 	this.pos = pos;
+	this.parent = null;
 	
 	var id = this.id;
 	

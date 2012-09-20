@@ -45,14 +45,27 @@
 	);
 	
 	
-	function onSelectClicked(object)
+	function onSelect(object)
 	{
+		debugger;
+		
 		// odaberi callout objekat
 		var glassID = parseInt(document.getElementById("glass_id").value);
 		app.selectGlass(glassID);
 		
 		// ucini nevidljivim callout
 		document.getElementById("callout").style.display = "none";
+	}
+
+	function onDelete(object)
+	{
+		debugger;
+		// odaberi callout objekat
+		var glassID = parseInt(document.getElementById("glass_id").value);
+		app.deleteGlass(glassID);
+		
+		document.getElementById("callout").style.display = "none";
+	
 	}
 	
 	</script>
@@ -82,7 +95,11 @@
      <div id="header" class="header"></div>
      <div id="contents" class="contents">
      </div>
-	 <!-- <span id="glassID">0</span> -->
+     
+     <!--   ovdje cemo smjestiti info o id-u stakla -->
+     <input id="glass_id" name="glass_id" style="display:none;"/>
+      
+	 <!-- 
 	 <div id="contents2"> 
        <form name="mjere" action="" method="get">
 		  <div class="ed">
@@ -93,9 +110,13 @@
 		  </div>
        </form>
     </div>
+     -->
+      
      <div id="selectButton" class="selectButton"> 
-		   <button onclick="onSelectClicked(this);">Ok</button>
+		   <button onclick="onSelect(this);">Odaberi</button>
+		   <button onclick="onDelete(this);">Brisi</button>
 	 </div>
+	 
 </div>
 
 
@@ -180,7 +201,6 @@ Broj stakala: <span>0</span>
 </form>
 </div>
 <!-- end dvoslojno staklo  -->
-
 
 
 <div id="commands" >

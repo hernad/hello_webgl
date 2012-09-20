@@ -78,40 +78,26 @@ GlassApp.prototype.createCameraControls = function()
 GlassApp.prototype.onGlassOver = function(id)
 {
 
-	var glass = this.glasses[id];
+	var glass = this.glasses[id-1];
 	
 
-	// W-width, H-height, T-thickness
-	var contentsHtml = "W: " + glass.width + " H: " + glass.height + " T:" + glass.depth + "<br>";
-
-	switch(id)
+	if (glass instanceof Glass)
 	{
-		case Glass.IDG1 :
-			headerHtml = "Staklo G1";
-			contentsHtml += "Karakteristike: todo-1";
-			break;
-			
-		case Glass.IDG2 :
-		    headerHtml = "Staklo G2";
-			contentsHtml += "Karakteristike: todo-2";
-
-			break;
-			
-		case Glass.IDG3 :
-			headerHtml = "Staklo G3";
-			contentsHtml += "Karakteristike: todo-3";
-			break;
-				
-		case Glass.IDG4 :
-			headerHtml = "Staklo G4";
-			contentsHtml += "Karakteristike: todo-4";
-			break;
-				
-		default:
-		    headerHtml = "nista";
-		    contentsHtml = "nista<br>pa nista";
-			
+	   // W-width, H-height, T-thickness
+	   var contentsHtml = "V: " + glass.height + " Š: " + glass.width + " D: " + glass.depth + "<br/>";
+	   var headerHtml = "Obično staklo";
+	   // Place the callout near the object and show it
+	   var screenpos = this.getObjectScreenPosition(this.glasses[id-1]);
 	}
+	else {
+		var contentsHtml = "V: " + glass.height + " Š: " + glass.width + 
+		                   "<br/>D vani: " + glass.depth_in + " dist: " + glass.depth_distancer + " unutra: " + glass.depth_out + " <br>";
+		var headerHtml = "Dvoslojno staklo";
+		// Pozicionirajmo se pored unutrasnjeg stakla
+		var screenpos = this.getObjectScreenPosition(this.glasses[id-1].glass_in);
+	}
+		
+	headerHtml += "[" + id + "]";
 	
 	// Populate the callout
 	var callout = document.getElementById("callout");
@@ -131,10 +117,9 @@ GlassApp.prototype.onGlassOver = function(id)
 	calloutContents.innerHTML = contentsHtml;
 	callout.glassID = this.selectedControl;
 	
-	// Place the callout near the object and show it
-	var screenpos = this.getObjectScreenPosition(this.glasses[id]);
+
 	
-	// dinamički setujem stil za callout div
+	// dinamicki setujem stil za callout div
 	// non => block
 	callout.style.display = "block";
 	// offsetWidth ?
@@ -143,73 +128,19 @@ GlassApp.prototype.onGlassOver = function(id)
 	callout.style.top = (screenpos.y + Glass.CALLOUT_Y_OFFSET) + "px";
 	
 	
+	/*
 	document.getElementById('edx').value = glass.height.toString();
 	document.getElementById('edy').value = glass.width.toString();
 	document.getElementById('edd').value = glass.depth.toString();
 	
     document.getElementById("glass_id").value = glass.id.toString();
+	*/
+	
+	$("#glass_id").val(glass.id.toString());
 	
 };
 
-// -----------------------------------------------
-// hendliraj distancer
-// ------------------------------------------------
-GlassApp.prototype.onDistancerOver = function(id)
-{
 
-	var distancer = this.distanceri[id];
-	
-
-	// W-width, H-height, T-thickness
-	var contentsHtml = "W: " + distancer.width + " H: " + distancer.height + " T:" + distancer.depth + "<br>";
-	
-	switch(id)
-	{
-		case Distancer.IDD1 :
-			headerHtml = "Distancer G1";
-			contentsHtml += "Karakteristike: vako nako";
-			break;
-			
-		case Distancer.IDD2 :
-		    headerHtml = "Distancer G2";
-			contentsHtml += "Karakteristike: vako2 nako2";
-
-			break;
-			
-		default:
-		    headerHtml = "distancer nista";
-		    contentsHtml = "nista<br>pa nista D";
-			
-	}
-	
-	// Populate the callout
-	var callout = document.getElementById("callout");
-	var calloutHeader = document.getElementById("header");
-	var calloutContents = document.getElementById("contents");
-
-	
-	calloutHeader.innerHTML = headerHtml;
-	calloutContents.innerHTML = contentsHtml;
-	callout.glassID = this.selectedControl;
-	
-	// Place the callout near the object and show it
-	var screenpos = this.getObjectScreenPosition(this.distanceri[id]);
-	
-	// dinamicki setujem stil za callout div
-	// non => block
-	callout.style.display = "block";
-	// offsetWidth ?
-
-	callout.style.left = (screenpos.x - callout.offsetWidth / 2) + "px";
-	callout.style.top = (screenpos.y + Glass.CALLOUT_Y_OFFSET) + "px";
-	
-	document.getElementById('edx').value = distancer.height.toString();
-	document.getElementById('edy').value = distancer.width.toString();
-	document.getElementById('edd').value = distancer.depth.toString();
-	
-    document.getElementById("glass_id").value = distancer.id.toString();
-	
-};
 
 //
 // x, y koordinate na 2D canvasu
@@ -240,6 +171,7 @@ GlassApp.prototype.getObjectScreenPosition = function(object)
 
 GlassApp.prototype.selectGlass = function(id)
 {
+	/*
 	var glass = this.glasses[id];
 	
 	var edx = parseInt(document.getElementById('edx').value);
@@ -262,6 +194,13 @@ GlassApp.prototype.selectGlass = function(id)
 	glass.init(this, {height: edx, width: edy, depth: edd}, pos, id);
 
 
+   */
+};
+
+GlassApp.prototype.deleteGlass = function(id) {
+	
+   alert("todo delete glass:" + id);	
+
 };
 
 // --------------------------------------
@@ -269,7 +208,7 @@ GlassApp.prototype.selectGlass = function(id)
 // --------------------------------------
 GlassApp.prototype.setFloor = function ()
 {
-	// neka pod bude mreža
+	// neka pod bude mre≈æa
     var geometry = new THREE.CubeGeometry(200, 0.1, 120, 15, 1, 15);
 	
 	var material = new THREE.MeshPhongMaterial({color: 0x000077, wireframe: 1, transparent: false, opacity: 0.07} );	

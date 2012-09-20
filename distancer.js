@@ -17,11 +17,15 @@ Distancer.prototype.init = function(app, geom, pos, parent)
 	this.pos = pos;
 	
 	var id = 0;
-	if (parent instanceof GDG)
-		id = parent.id;
-	else
-		id = this.id;
 
+	if (parent instanceof GDG) {
+		id = parent.id;
+	    this.parent = parent;
+	}
+	else {
+		id = this.id;
+	    this.parent = null;
+	}
 	this.id = id;
 	
 	this.update_geometry(this.width/2, this.height / 2, this.depth / 2);
