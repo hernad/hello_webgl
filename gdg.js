@@ -17,17 +17,12 @@ GDG.prototype.init = function(app, geom, pos)
 	this.depth_in = geom.depth_in || 2;
 	this.depth_distancer = geom.depth_distancer || 1;
 
-	if (pos.x === null)
-    {
-
-	   if (app.glasses.length > 0)
-	      app.x += this.width/2;
-	      
-	   pos.x = app.x;   
-	   app.x += this.width / 2 + GlassApp.X_DELTA;
-    };
-	
 	this.pos = pos;
+	
+	// setuj pos.x koordinatu
+	this.set_x();
+
+	
 	this.parent = null;
 	
 	var id = this.id;
@@ -43,48 +38,78 @@ GDG.prototype.init = function(app, geom, pos)
 		app.glasses[id-1] = this;
 	}
 
+
+	// stavimo jednu tacku prema pos koordinati da ona bude nosilac ovog slozenog objekta
+	var geometry = new THREE.Geometry();
+	var v1 = new THREE.Vector3(- this.width/2, 1, 0);
+	geometry.vertices.push(new THREE.Vertex(v1));
 	
-		
+	var v2 = new THREE.Vector3(this.width/2, 1, 0);
+	geometry.vertices.push(new THREE.Vertex(v2)); 
+	
+	var material = new THREE.LineBasicMaterial({ color: 0xff0000, opacity: 0.01, linewidth: 2 });
+    var mesh = new  THREE.Line( geometry, material );
+	
+    this.setObject3D(mesh);
+    this.mesh = mesh;
+    app.addObject(this);
+    
+
+    // child objekti imaju koordinate uvijek RELATIVNE u odnosu na master obejakt 
     this.glass_out = new Glass();
 	this.glass_out.init(app, 
         {width: this.width, height: this.height, depth: this.depth_out}, 
-        {x: pos.x, y: pos.y, z: pos.z}, this);
+        {x: 0, y: 0, z: 0}, this);
 
-
+	this.addChild(this.glass_out);
+	
 	this.distancer = new Distancer();
 	this.distancer.init(app, 
 	   {width: this.width, height: this.height, depth: this.depth_distancer}, 
-	   {x: pos.x, y: pos.y, z: pos.z + this.depth_out/2 + this.depth_distancer/2}, this);
+	   {x: 0, y: 0, z: 0 + this.depth_out/2 + this.depth_distancer/2}, this);
 
+	this.addChild(this.distancer);
+	
 	
 	this.glass_in = new Glass();
 	this.glass_in.init(app, 
         {width: this.width, height: this.height, depth: this.depth_in}, 
-		{x: pos.x, y: pos.y, z: pos.z + this.depth_out/2 + this.depth_distancer + this.depth_in/2 }, this);
+		{x: 0, y: 0, z: 0 + this.depth_out/2 + this.depth_distancer + this.depth_in/2 }, this);
 
+	this.addChild(this.glass_in);
+
+	this.setPosition(this.pos.x, this.pos.y, this.pos.z);
+};
+
+GDG.prototype.set_x = function() {
+	
+	if (this.pos.x === null)
+    {
+
+	   if (this.app.glasses.length > 0)
+	      this.app.x += this.width/2;
+	      
+	   this.pos.x = this.app.x;   
+	   this.app.x += this.width / 2 + GlassApp.X_DELTA;
+    }
+	
 	
 };
 
 GDG.prototype.update_x = function(x) {
-	//this.glass_out.setPosition(x, this.pos.y + this.height/2, this.pos.z);
-    debugger;
-	this.glass_out.mesh.position.y;
 	
-};
-
-GDG.prototype.update_x = function(x) {
-	this.glass_out.update_x(x);
-	this.glass_in.update_x(x);
-	this.distancer.update_x(x);
+	var y = this.mesh.position.y;
+	var z = this.mesh.position.z;
+	
+	this.setPosition(x, y, z);
+	
 };
 
 
 GDG.prototype.remove_me = function()
 {
-	this.app.removeObject(this.glass_out);
-	this.app.removeObject(this.glass_in);
-	this.app.removeObject(this.distancer);
-
+	this.app.removeObject(this);
+	
 };
 
 GDG.prototype.decrement_id = function()

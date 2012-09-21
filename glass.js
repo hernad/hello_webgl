@@ -14,17 +14,9 @@ Glass.prototype.init = function(app, geom, pos, parent)
 	this.width = geom.width || 10;
 	this.depth = geom.depth || 2;
 
-	if (pos.x === null)
-    {
-
-	   if (app.glasses.length > 0)
-	      app.x += this.width/2;
-	      
-	   pos.x = app.x;   
-	   app.x += this.width / 2 + GlassApp.X_DELTA;
-    }
-	
-	this.pos = pos;
+	this.pos = pos;		
+	// setuj x koordinatu automatski ako je pos.x = null;
+	this.set_x();
 	
 	var id = 0;
 	if (parent instanceof GDG) {
@@ -60,7 +52,23 @@ Glass.prototype.init = function(app, geom, pos, parent)
 	
 };
 
+Glass.prototype.set_x = function() {
+	
+	if (this.pos.x === null)
+    {
+
+	   if (this.app.glasses.length > 0)
+	      this.app.x += this.width/2;
+	      
+	   this.pos.x = this.app.x;   
+	   this.app.x += this.width / 2 + GlassApp.X_DELTA;
+    }
+	
+	
+};
+
 Glass.prototype.update_x = function(x) {
+	
 	var y = this.mesh.position.y;
 	var z = this.mesh.position.z;
 	

@@ -431,7 +431,6 @@ GlassApp.prototype.ukloniRupe = function()
 		
 	   var glass = app.glasses[i];
 	   
-
 	   if (i>0)
 		   this.x += glass.width/2;
 		      
@@ -443,17 +442,6 @@ GlassApp.prototype.ukloniRupe = function()
 	
 };
 
-/*
- 	if (pos.x === null)
-    {
-
-	   if (app.glasses.length > 0)
-	      app.x += this.width/2;
-	      
-	   pos.x = app.x;   
-	   app.x += this.width / 2 + GlassApp.X_DELTA;
-    }
- */
 
 function between(num, from, to) {
 	
@@ -465,14 +453,6 @@ function between(num, from, to) {
 
 function reset_form_text_fields(frm_id) {
 	
-  /*
-  $("#f_staklo_2 input[name=visina]:text").val("");
-  $("#f_staklo_2 input[name=sirina]:text").val("");
-  $("#f_staklo_2 input[name=debljina_in]:text").val("");
-  $("#f_staklo_2 input[name=debljina_dist]:text").val("");
-  $("#f_staklo_2 input[name=debljina_out]:text").val("");
-  */
-  
   $("#" + frm_id + " input:text").val(function () {
 	  return this.defaultValue;
   });
