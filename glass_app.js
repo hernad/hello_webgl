@@ -191,7 +191,7 @@ GlassApp.prototype.selectGlass = function(id)
 	
 	var glass = this.glasses[id-1];
 	
-
+	this.update_status_selected_glass(glass);
 	
 	$("#m_btn_3").css("display", "block");
 	
@@ -403,14 +403,180 @@ GlassApp.prototype.wireApplication = function ()
 		return this.firstChild;
 	}).before("> ").after(" <");
 	
+	
+	
+	this.rotate_update_wire();
+	
 	app.update_status();
 	
 };
 
 
+GlassApp.prototype.rotate_update_wire = function() {
+	
+	var app = this;
+	
+	// jednoslojno => otvori formu f_staklo_1
+	$("#m_btn_3").bind('click',  function() {
+		console.log("rotacija i pomjeranje");
+		
+		$("#rot_pom").css("display", "block");
+	});
+	
+	$("#pom_rot_ok").bind('click',  function() {
+		console.log("rotacija i pomjeranje kraj");
+		
+		$("#rot_pom").css("display", "none");
+	});
+	
+	// rotacija
+	// x-
+	$("#rot_1a").click(function () {
+		var id = $("#glass_id").val();
+		app.rotateGlass(id, "x", -1); 
+	});
+	
+	// x+
+	$("#rot_1b").click(function () {
+		var id = $("#glass_id").val();
+		app.rotateGlass(id, "x", 1); 
+	});
+	
+	// y-
+	$("#rot_2a").click(function () {
+		var id = $("#glass_id").val();
+		app.rotateGlass(id, "y", -1);
+		
+	});
+	// y+
+	$("#rot_2b").click(function () {
+		var id = $("#glass_id").val();
+	    app.rotateGlass(id, "y", 1);
+		
+	});
+	
+	// z-
+	$("#rot_3a").click(function () {
+		var id = $("#glass_id").val();
+		app.rotateGlass(id, "z", -1);
+		
+	});
+	// z+
+	$("#rot_3b").click(function () {
+		var id = $("#glass_id").val();
+		app.rotateGlass(id, "z", 1);
+	});	
+	
+	
+	// pomjeranje
+	// x-
+	$("#pom_1a").click(function () {
+		var id = $("#glass_id").val();
+		app.translateGlass(id, "x", -1);
+	});
+	// x+
+	$("#pom_1b").click(function () {
+		var id = $("#glass_id").val();
+		app.translateGlass(id, "x", 1);
+	});
+	
+	// y-
+	$("#pom_2a").click(function () {
+		var id = $("#glass_id").val();
+		app.translateGlass(id, "y", -1);
+	});
+	// y+
+	$("#pom_2b").click(function () {
+		var id = $("#glass_id").val();
+		app.translateGlass(id, "y", 1);
+		
+	});
+	
+	// z-
+	$("#pom_3a").click(function () {
+		var id = $("#glass_id").val();
+		app.translateGlass(id, "z", -1);
+	});
+	// z+
+	$("#pom_3b").click(function () {
+		var id = $("#glass_id").val();
+		app.translateGlass(id, "z", 1);
+	});	
+	
+};
+
+GlassApp.prototype.rotateGlass = function(id, axis, value) 
+{
+		
+	   var glass = this.glasses[id-1];
+	   
+	   // convert to radians
+	   value = GlassApp.ROTATION_STEP_DEGREES * value * Math.PI / 180;
+	     
+	   switch (axis) {
+	   
+	      case "x":
+	    	  glass.mesh.rotation.x += value;
+	    	  break;
+	    	  
+	      case "y":
+	    	  glass.mesh.rotation.y += value;
+	    	  break;	   
+	    	  
+	      case "z":
+	    	  glass.mesh.rotation.z += value;
+	    	  break;	   
+	   
+	   };
+	   
+	   glass.app.update_status_selected_glass(glass);
+	   
+};
+
+GlassApp.prototype.translateGlass = function(id, axis, value) 
+{
+		
+	   var glass = this.glasses[id-1];
+	   
+	   // convert to radians
+	   value = GlassApp.TRANSLATION_STEP * value;
+	     
+	   switch (axis) {
+	   
+	      case "x":
+	    	  glass.mesh.position.x += value;
+	    	  break;
+	    	  
+	      case "y":
+	    	  glass.mesh.position.y += value;
+	    	  break;	   
+	    	  
+	      case "z":
+	    	  glass.mesh.position.z += value;
+	    	  break;	   
+	   
+	   };
+	   
+	   glass.app.update_status_selected_glass(glass);
+	   
+};
+
 GlassApp.prototype.update_status = function() {
 	
 	$("#status span").html(this.glasses.length);
+	
+	
+};
+
+GlassApp.prototype.update_status_selected_glass = function(glass) {
+	
+	$("#pom_x").html(glass.mesh.position.x.toFixed(1));
+	$("#pom_y").html(glass.mesh.position.y.toFixed(1));
+	$("#pom_z").html(glass.mesh.position.z.toFixed(1));
+	
+	$("#rot_x").html((glass.mesh.rotation.x * 180 / Math.PI).toFixed(1).toString() + " st");
+	$("#rot_y").html((glass.mesh.rotation.y * 180 / Math.PI).toFixed(1).toString() + " st");
+	$("#rot_z").html((glass.mesh.rotation.z * 180 / Math.PI).toFixed(1).toString() + " st");
 };
 
 
@@ -418,6 +584,8 @@ GlassApp.prototype.deleteGlass = function(id)
 {
 		
 	   var glass = this.glasses[id-1];
+	   
+	   $("#rot_pom").css("display", "none");
 	   
 	   $("#selected_staklo").html("");
 	   $("#m_btn_3").css("display", "none");
@@ -460,7 +628,6 @@ GlassApp.prototype.ukloniRupe = function()
 	
 };
 
-
 function between(num, from, to) {
 	
 	if (num < from || num > to)
@@ -489,3 +656,6 @@ GlassApp.ROTATE_SPEED = 1.0;
 GlassApp.ZOOM_SPEED = 3;
 GlassApp.PAN_SPEED = 0.2;
 GlassApp.DAMPING_FACTOR = 0.3;
+
+GlassApp.ROTATION_STEP_DEGREES = 5;
+GlassApp.TRANSLATION_STEP = 1;

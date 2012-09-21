@@ -382,3 +382,66 @@ h1 {
   background-color: green;
 }
 
+#rot_pom {
+  display: none;
+  position: fixed;
+  width: auto;
+  text-align: center;	
+  right: 0;
+  bottom: 0;
+  margin-bottom:22%;
+  margin-right: 3%;
+  margin-left: 0;
+  padding-left: -3em;
+  padding-right: 2em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+   	
+  border: solid 2px yellow;
+  border-radius: 5px;
+  
+  font-family: sans-serif;
+  color: white;
+  background-color: green;
+  opacity: 0.5;
+}
+
+#rot_pom ul {
+	list-style: none;
+}
+
+#rot_pom span {
+	position: relative;
+	float: left;
+  	width: 8em;
+  	padding-top: 0.5em;
+  	color: yellow;
+}
+
+#rot_pom button {
+	position: relative;
+	float: left;
+  	width: 3em;
+  	font-weight: bold;
+  	font-size: 1em;
+}
+
+#rot_pom li {
+	position: relative;
+	top: 0
+	float: left;
+	margin-left: 0;
+	margin-bottom: 0.5em;
+	height: 1.1em;
+}
+
+#rot_pom span.li_poc_red {
+	position: relative;
+	float: left;
+	clear: both;
+  	width: 4em;
+  	color: white;
+  	font-weight: bold;
+}
+
+
