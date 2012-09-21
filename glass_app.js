@@ -42,6 +42,11 @@ GlassApp.prototype.init = function(param)
     		{width: 9, height: 10, depth_out: 4, depth_distancer: 1, depth_in: 6  },
     		{x: null, y: 0, z: 0});
     
+    var glass_1 = new Glass();
+    glass_1.init(app, 
+    		{width: 8, height: 16, depth: 5},
+    		{x: null, y: 0, z: 0});    
+    
 	this.createCameraControls();
 	
 	this.createMenu();
@@ -87,7 +92,7 @@ GlassApp.prototype.createCameraControls = function()
 	this.controls = controls;
 };
 
-GlassApp.prototype.onGlassOver = function(id)
+GlassApp.prototype.onGlassSelect = function(id)
 {
 
 	var glass = this.glasses[id-1];
@@ -95,6 +100,7 @@ GlassApp.prototype.onGlassOver = function(id)
 	var contentsHtml;
 	var headerHtml;
 	var screenpos;
+	
 	
 	if (glass instanceof Glass)
 	{
@@ -105,15 +111,22 @@ GlassApp.prototype.onGlassOver = function(id)
 	   // Place the callout near the object and show it
 	   screenpos = this.getObjectScreenPosition(this.glasses[id-1]);
 	}
-	else {
+	else if (glass instanceof GDG) {
+	
+		
 		contentsHtml = "V: " + glass.height + " Š: " + glass.width + 
 		                   "<br/>D vani: " + glass.depth_in + " dist: " + glass.depth_distancer + " unutra: " + glass.depth_out + " <br>";
 		headerHtml = "Dvoslojno staklo";
 		
 		// Pozicionirajmo se pored unutrasnjeg stakla
 		screenpos = this.getObjectScreenPosition(this.glasses[id-1].glass_in);
-	}
 		
+	}
+	else
+		return;
+		
+	glass.animate(true);
+	
 	headerHtml += "[" + id + "]";
 	
 	// Populate the callout
@@ -121,21 +134,13 @@ GlassApp.prototype.onGlassOver = function(id)
 	var calloutHeader = document.getElementById("header");
 	var calloutContents = document.getElementById("contents");
 	
-	/*
-	var _msg = "callot header undefined";
-	if (calloutHeader == undefined) { 
-		  console.log(_msg);
-		  //alert(_msg);
-	}
-	if (callout == undefined) console.log("callout undefined");
-	*/
 	
 	calloutHeader.innerHTML = headerHtml;
 	calloutContents.innerHTML = contentsHtml;
 	callout.glassID = this.selectedControl;
 	
 	callout.style.display = "block";
-	// offsetWidth ?
+
 
 	callout.style.left = (screenpos.x - callout.offsetWidth / 2)+ "px";
 	callout.style.top = (screenpos.y + Glass.CALLOUT_Y_OFFSET) + "px";
@@ -272,7 +277,6 @@ GlassApp.prototype.update = function()
 	// Update the headlight to point at the model
 	//var normcamerapos = this.camera.position.clone().normalize();
 	//this.headlight.position.copy(normcamerapos);
-
 	Sim.App.prototype.update.call(this);
 };
 

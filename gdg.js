@@ -79,7 +79,64 @@ GDG.prototype.init = function(app, geom, pos)
 	this.addChild(this.glass_in);
 
 	this.setPosition(this.pos.x, this.pos.y, this.pos.z);
+	
+
+	
+	
+	
 };
+
+GDG.prototype.animate = function(on)
+{
+	if (this.animator !== undefined)
+	   delete this.animator;
+	
+	this.rotationValues = [ { x: this.mesh.rotation.x},
+	                        { x: this.mesh.rotation.x + Math.PI},
+	                        { x: this.mesh.rotation.x + Math.PI/2},
+	                        { x: this.mesh.rotation.x}
+	                     ];
+	
+	this.positionValues = [ { x: this.pos.x, y: this.pos.y +  0, z: this.pos.z}, 
+	                        { x: this.pos.x, y: this.pos.y + 10, z: this.pos.z},
+	                        { x: this.pos.x, y: this.pos.y + 15, z: this.pos.z},
+	                        { x: this.pos.x, y: this.pos.y +  0, z: this.pos.z}
+	                     ];
+	
+	this.animator = new Sim.KeyFrameAnimator;
+	this.animator.init({ 
+		interps:
+			[ 
+		       { keys:GDG.positionKeys, values:this.positionValues, target:this.object3D.position },
+		       { keys:GDG.rotationKeys, values:this.rotationValues, target:this.object3D.rotation } 
+			],
+		loop: GDG.loopAnimation,
+		duration: GDG.animation_time
+	});
+	
+   this.addChild(this.animator);
+   this.animator.subscribe("complete", this, this.onAnimationComplete);
+		
+   if (on)
+   {
+	  this.animator.loop = GDG.loopAnimation;
+      this.animator.start();
+   }
+   else
+   {
+	  this.animator.stop();
+   }
+};
+
+GDG.prototype.onAnimationComplete = function()
+{
+   this.publish("complete");
+};
+
+GDG.positionKeys = [0, 0.5, 0.75, 1];
+
+GDG.rotationKeys = [0, 0.5, 0.75, 1];
+
 
 GDG.prototype.set_x = function() {
 	
@@ -101,6 +158,7 @@ GDG.prototype.update_x = function(x) {
 	var y = this.mesh.position.y;
 	var z = this.mesh.position.z;
 	
+	this.pos.x = x;
 	this.setPosition(x, y, z);
 	
 };

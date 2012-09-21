@@ -52,6 +52,60 @@ Glass.prototype.init = function(app, geom, pos, parent)
 	
 };
 
+
+Glass.prototype.animate = function(on)
+{
+	if (this.animator !== undefined)
+	   delete this.animator;
+	
+	this.rotationValues = [ { y: this.mesh.rotation.y},
+	                         { y: this.mesh.rotation.y - Math.PI},
+	                         { y: this.mesh.rotation.y - Math.PI/2},
+	                         { y: this.mesh.rotation.y}
+	                       ];
+	
+	this.positionValues = [ { x: this.mesh.position.x, y: this.mesh.position.y +  0, z: this.mesh.position.z}, 
+	                        { x: this.mesh.position.x, y: this.mesh.position.y + -5, z: this.mesh.position.z},
+	                        { x: this.mesh.position.x, y: this.mesh.position.y +  5, z: this.mesh.position.z},
+	                        { x: this.mesh.position.x, y: this.mesh.position.y +  0, z: this.mesh.position.z}
+	                     ];
+	
+	this.animator = new Sim.KeyFrameAnimator;
+	this.animator.init({ 
+		interps:
+			[ 
+		       { keys:GDG.positionKeys, values:this.positionValues, target:this.object3D.position },
+		       { keys:GDG.rotationKeys, values:this.rotationValues, target:this.object3D.rotation } 
+			],
+		loop: GDG.loopAnimation,
+		duration: GDG.animation_time
+	});
+	
+   this.addChild(this.animator);
+   this.animator.subscribe("complete", this, this.onAnimationComplete);
+		
+   if (on)
+   {
+	  this.animator.loop = GDG.loopAnimation;
+      this.animator.start();
+   }
+   else
+   {
+	  this.animator.stop();
+   }
+};
+
+Glass.prototype.onAnimationComplete = function()
+{
+   this.publish("complete");
+};
+
+Glass.positionKeys = [0, 0.5, 0.75, 1];
+
+Glass.rotationKeys = [0, 0.5, 0.75, 1];
+
+
+
 Glass.prototype.set_x = function() {
 	
 	if (this.pos.x === null)
@@ -72,7 +126,9 @@ Glass.prototype.update_x = function(x) {
 	var y = this.mesh.position.y;
 	var z = this.mesh.position.z;
 	
+	this.pos.x = x;
 	this.setPosition(x, y, z);
+	
 };
 
 Glass.prototype.update_geometry = function(width, height, depth)
@@ -88,23 +144,25 @@ Glass.prototype.update_geometry = function(width, height, depth)
     this.setObject3D(mesh);
     this.mesh = mesh;
 	
-    // generisi "over" event koji ce App objekat hendlirati sa funkcijom onGlassOver
-	this.subscribe("over", app, app.onGlassOver);
+    // generisi "selected" event koji ce App objekat hendlirati sa funkcijom onGlassSelect
+	this.subscribe("selected", app, app.onGlassSelect);
 	app.addObject(this);
 
 };
 
 Glass.prototype.handleMouseUp = function(x, y, point, normal)
 {
+	
 	this.publish("selected", this.id);
 };
+
 
 Glass.prototype.handleMouseOver = function()
 {
 	
 	// ovo henlidra app objekat
 	// on se pretplatio na "over" dogadjaj
-	this.publish("over", this.id);
+	//this.publish("over", this.id);
 		
 };
 
