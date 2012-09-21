@@ -188,9 +188,20 @@ GlassApp.prototype.getObjectScreenPosition = function(object)
 
 GlassApp.prototype.selectGlass = function(id)
 {
-	/*
-	var glass = this.glasses[id];
 	
+	var glass = this.glasses[id-1];
+	
+
+	
+	$("#m_btn_3").css("display", "block");
+	
+	
+	// uzmi info o staklu callout header-a
+	var staklo_info = $(".callout .header").html() + $(".callout .contents").html();
+	
+	$("#selected_staklo").html(staklo_info);
+	
+	/*
 	var edx = parseInt(document.getElementById('edx').value);
 	var edy = parseInt(document.getElementById('edy').value);
 	var edd = parseInt(document.getElementById('edd').value);
@@ -407,6 +418,9 @@ GlassApp.prototype.deleteGlass = function(id)
 {
 		
 	   var glass = this.glasses[id-1];
+	   
+	   $("#selected_staklo").html("");
+	   $("#m_btn_3").css("display", "none");
 	   
 	   glass.remove_me();
 	   delete app.glasses[id - 1];

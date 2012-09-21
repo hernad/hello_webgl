@@ -24,6 +24,7 @@ h1 {
 	background-color: DargGray;
 }
 
+
 #glass_id {
   display: none;
 } 
@@ -40,8 +41,7 @@ h1 {
 	width: 200px;
 	height: auto;
 	background-color: rgba(200, 200, 200, 0.3);	
-	z-index:0;
-	
+	z-index:0;	
 	
 	color:#990000;
 }
@@ -76,8 +76,10 @@ h1 {
 	postion:absolute;
 }
 
-.callout #selectButton {
+.callout #selectButton button {
 	align: center;
+	width: 6em;
+	font-size:0.95em;
 }
 
 .ed {
@@ -107,9 +109,9 @@ h1 {
  /*margin-top: 5px;*/
  padding-top: 5px;
  bottom:0; 
- height: 2em;   /* Height of the footer */
+ height: 1.8em;
    
- line-height: 1.4em;
+ line-height: 1.2em;
  /*padding: 0 2px 0 2px;*/
  border: solid 1px white;
  
@@ -155,7 +157,7 @@ h1 {
   margin-right: 6px;
   width: 120px;
   height: 40px;
-  font-size: 1.1em;
+  font-size: 1.05em;
 
 
   background-color: none;
@@ -362,3 +364,21 @@ h1 {
   color: white;
   background-color: #0099FF;
 }
+
+#selected_staklo {
+  position: fixed;
+  width: 15em;
+  text-align: center;	
+  right: 0;
+  bottom: 0;
+  margin-bottom:15%;
+  margin-right: 3%; 	
+  padding: 3px 3px 3px 3px;
+  /* border: solid 2px white;
+  border-radius: 5px;*/
+  
+  font-family: sans-serif;
+  color: white;
+  background-color: green;
+}
+
